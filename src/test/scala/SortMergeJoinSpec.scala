@@ -5,8 +5,8 @@ class SortMergeJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Sort Merge Join")
     .master("local[*]")
-    .config("spark.sql.join.preferSortMergeJoin", false)
     .config("spark.sql.autoBroadcastJoinThreshold", -1)
+    .config("spark.sql.join.preferSortMergeJoin", false)
     .getOrCreate()
 
   override def afterAll() {
