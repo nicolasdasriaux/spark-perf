@@ -19,7 +19,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
-    .appName("Spark shuffle join")
+    .appName("Broadcast Hash Join")
     .master("local[*]")
     .config("spark.sql.autoBroadcastJoinThreshold", 200)
     .getOrCreate()
@@ -116,7 +116,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
     customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
   }
 
-  it should "should be performed when hint conditions apply" in {
+  it should "be performed when broadcast function applied" in {
     /**
       * Applicability of '''Broadcast Hash Join''' (by hints)
       *
@@ -148,7 +148,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * Rows
       *
       * Customer: 8
-      * Order: 400 = 8 * 100
+      * Order: 800 = 8 * 100
       */
 
     val customersDS = ECommerce.customersDS(8) //
@@ -199,6 +199,21 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       *
       * NO, it doesn't apply.
       */
+
+    customersAndOrdersDF.explain(true)
+    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
+  }
+
+  it should "be performed when broadcast hint is applied" in {
+    implicit val spark: SparkSession = sparkSession
+    import spark.implicits._
+
+    val customersDS = ECommerce.customersDS(8) //
+    val ordersDS = ECommerce.ordersDS(8, customerId => 100)
+
+    val customersAndOrdersDF = customersDS.as("cst").hint("broadcast")
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
+      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
 
     customersAndOrdersDF.explain(true)
     customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)

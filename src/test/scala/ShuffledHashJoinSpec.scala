@@ -19,7 +19,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
-    .appName("Spark shuffle join")
+    .appName("Shuffled Hash Join")
     .master("local[*]")
     .config("spark.sql.join.preferSortMergeJoin", false)
     .config("spark.sql.autoBroadcastJoinThreshold", 2)
@@ -34,7 +34,6 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
     /**
       * Applicability of '''Shuffled Hash Join'''
       *
-      * [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection]]
       * [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.apply()]]
       *
       * (1) Look for cases that output `ShuffledHashJoinExec`

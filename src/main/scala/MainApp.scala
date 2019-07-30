@@ -32,7 +32,7 @@ object MainApp {
 
     val customersAndOrdersDF = spark.table("customers").as("cst")
       .join(spark.table("orders").as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.firstName", $"cst.lastName", $"ord.id".as("orderId"))
+      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
 
     customersAndOrdersDF.write
         .mode(SaveMode.Overwrite)
