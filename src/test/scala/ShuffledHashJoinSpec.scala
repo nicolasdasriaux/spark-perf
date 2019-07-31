@@ -21,12 +21,16 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Shuffled Hash Join")
     .master("local[*]")
+    .config("spark.default.parallelism", 8) // Default parallelism in Spark
+    .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
+
     .config("spark.sql.join.preferSortMergeJoin", false)
     .config("spark.sql.autoBroadcastJoinThreshold", 2)
     .config("spark.sql.shuffle.partitions", 100)
     .getOrCreate()
 
   override def afterAll() {
+    SparkPerf.keepSparkUIAlive()
     sparkSession.stop()
   }
 
@@ -110,7 +114,7 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       */
 
     val customersDS = ECommerce.customersDS(4) //
-    val ordersDS = ECommerce.ordersDS(4, customerId => 100)
+    val ordersDS = ECommerce.ordersWithKnownRowCountDS(4, customerId => 100)
 
     /**
       * Estimated Size for All Rows (bytes)

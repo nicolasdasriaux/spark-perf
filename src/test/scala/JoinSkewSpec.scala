@@ -6,12 +6,16 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Join Skew")
     .master("local[*]")
+    .config("spark.default.parallelism", 8) // Default parallelism in Spark
+    .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
+
     .config("spark.sql.join.preferSortMergeJoin", true)
     .config("spark.sql.autoBroadcastJoinThreshold", -1)
     .enableHiveSupport()
     .getOrCreate()
 
   override def afterAll() {
+    SparkPerf.keepSparkUIAlive()
     sparkSession.stop()
   }
 
@@ -28,7 +32,7 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
     customersAndOrdersDF.write
       .mode(SaveMode.Overwrite)
-      .saveAsTable("customers_orders")
+      .saveAsTable("customers_orders_skew")
   }
 
   it should "be fixable with broadcasting" in {
@@ -47,7 +51,7 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
     customersAndOrdersDF.write
       .mode(SaveMode.Overwrite)
-      .saveAsTable("customers_orders")
+      .saveAsTable("customers_orders_broadcast")
   }
 
   it should "be fixable with salting" in {
@@ -68,6 +72,6 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
     customersAndOrdersDF.write
       .mode(SaveMode.Overwrite)
-      .saveAsTable("customers_orders")
+      .saveAsTable("customers_orders_salt")
   }
 }

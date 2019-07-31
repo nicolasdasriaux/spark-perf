@@ -21,10 +21,14 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Broadcast Hash Join")
     .master("local[*]")
+    .config("spark.default.parallelism", 8) // Default parallelism in Spark
+    .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
+
     .config("spark.sql.autoBroadcastJoinThreshold", 200)
     .getOrCreate()
 
   override def afterAll() {
+    SparkPerf.keepSparkUIAlive()
     sparkSession.stop()
   }
 
@@ -80,8 +84,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * Order: 400 = 4 * 100
       */
 
-    val customersDS = ECommerce.customersDS(4) //
-    val ordersDS = ECommerce.ordersDS(4, customerId => 100)
+    val customersDS = ECommerce.customersWithKnownRowCountDS(4)
+    val ordersDS = ECommerce.ordersWithKnownRowCountDS(4, customerId => 100)
 
     /**
       * Estimated Size for All Rows (bytes)
@@ -112,8 +116,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * YES, it applies.
       */
 
-    customersAndOrdersDF.explain(true)
     customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
+    customersAndOrdersDF.collect()
   }
 
   it should "be performed when broadcast function applied" in {
@@ -151,8 +155,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * Order: 800 = 8 * 100
       */
 
-    val customersDS = ECommerce.customersDS(8) //
-    val ordersDS = ECommerce.ordersDS(8, customerId => 100)
+    val customersDS = ECommerce.customersWithKnownRowCountDS(8) //
+    val ordersDS = ECommerce.ordersWithKnownRowCountDS(8, customerId => 100)
 
     /**
       * Estimated Size for All Rows (bytes)
@@ -200,22 +204,22 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * NO, it doesn't apply.
       */
 
-    customersAndOrdersDF.explain(true)
     customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
+    customersAndOrdersDF.collect()
   }
 
   it should "be performed when broadcast hint is applied" in {
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
 
-    val customersDS = ECommerce.customersDS(8) //
-    val ordersDS = ECommerce.ordersDS(8, customerId => 100)
+    val customersDS = ECommerce.customersWithKnownRowCountDS(8) //
+    val ordersDS = ECommerce.ordersWithKnownRowCountDS(8, customerId => 100)
 
     val customersAndOrdersDF = customersDS.as("cst").hint("broadcast")
       .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
       .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
 
-    customersAndOrdersDF.explain(true)
     customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
+    customersAndOrdersDF.collect()
   }
 }
