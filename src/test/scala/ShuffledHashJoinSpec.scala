@@ -157,7 +157,7 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * YES, it applies.
       */
 
-    customersAndOrdersDF.explain(true)
     customersAndOrdersDF.queryExecution.toString().contains("ShuffledHashJoin") should be(true)
+    customersAndOrdersDF.collect()
   }
 }
