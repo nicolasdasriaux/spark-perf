@@ -31,8 +31,8 @@ object MainApp {
       .saveAsTable("orders")
 
     val customersAndOrdersDF = spark.table("customers").as("cst")
-      .join(spark.table("orders").as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(spark.table("orders").as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     customersAndOrdersDF.write
         .mode(SaveMode.Overwrite)

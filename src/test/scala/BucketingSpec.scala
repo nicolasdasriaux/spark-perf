@@ -28,9 +28,9 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .saveAsTable("orders_no_bucket")
 
     val orderCountsDF = spark.table("orders_no_bucket")
-      .where($"customerId".isin(1 to 10: _*))
-      .groupBy($"customerId")
-      .agg(count($"id").as("orderCount"))
+      .where($"customer_id".isin(1 to 10: _*))
+      .groupBy($"customer_id")
+      .agg(count($"id").as("order_count"))
 
     orderCountsDF.collect()
     orderCountsDF.queryExecution.toString() shouldNot include regex """SelectedBucketsCount: \d+ out of 10"""
@@ -45,14 +45,14 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
     ordersDS.write
       .mode(SaveMode.Overwrite)
-      .bucketBy(10, "customerId")
+      .bucketBy(10, "customer_id")
       .sortBy("id")
       .saveAsTable("orders_bucket")
 
     val orderCountsDF = spark.table("orders_bucket")
-      .where($"customerId".isin(1 to 10: _*))
-      .groupBy($"customerId")
-      .agg(count($"id").as("orderCount"))
+      .where($"customer_id".isin(1 to 10: _*))
+      .groupBy($"customer_id")
+      .agg(count($"id").as("order_count"))
 
     orderCountsDF.collect()
     orderCountsDF.queryExecution.toString() should include regex """SelectedBucketsCount: \d+ out of 10"""

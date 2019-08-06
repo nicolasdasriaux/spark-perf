@@ -124,8 +124,8 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       */
 
     val customersAndOrdersDF = customersDS.as("cst")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     /**
       * Applicability of Shuffled Hash Join

@@ -95,8 +95,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       */
 
     val customersAndOrdersDF = customersDS.as("cst")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     /**
       * Applicability of '''Broadcast Hash Join''' (by sizes)
@@ -166,8 +166,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       */
 
     val customersAndOrdersDF = broadcast(customersDS.as("cst"))
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     /**
       * Applicability of '''Broadcast Hash Join''' (by hints)
@@ -216,8 +216,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
     val ordersDS = ECommerce.ordersWithKnownRowCountDS(8, customerId => 100)
 
     val customersAndOrdersDF = customersDS.as("cst").hint("broadcast")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     customersAndOrdersDF.collect()
     customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)

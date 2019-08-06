@@ -1,1 +1,1 @@
-case class Order(id: Long, customerId: Long)
+case class Order(id: Long, customer_id: Long)

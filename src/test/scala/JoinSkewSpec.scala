@@ -27,8 +27,8 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val ordersDS = ECommerce.ordersDS(10, customerId => if (customerId == 1) 1000000 else 5)
 
     val customersAndOrdersDF = customersDS.as("cst")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     customersAndOrdersDF.write
       .mode(SaveMode.Overwrite)
@@ -46,8 +46,8 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val broadcastCustomersDS = broadcast(customersDS)
 
     val customersAndOrdersDF = broadcastCustomersDS.as("cst")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     customersAndOrdersDF.write
       .mode(SaveMode.Overwrite)
@@ -67,8 +67,8 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val saltedOrdersDF = ordersDS.withColumn("salt", round(rand * (saltCount - 1)).cast(IntegerType))
 
     val customersAndOrdersDF = saltedCustomersDF.as("cst")
-      .join(saltedOrdersDF.as("ord"), $"cst.id" === $"ord.customerId" && $"cst.salt" === $"ord.salt")
-      .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
+      .join(saltedOrdersDF.as("ord"), $"cst.id" === $"ord.customer_id" && $"cst.salt" === $"ord.salt")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     customersAndOrdersDF.write
       .mode(SaveMode.Overwrite)

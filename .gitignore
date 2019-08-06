@@ -1,8 +1,11 @@
+# SBT
 target/
 
+# Spark local
 spark-warehouse/
 metastore_db/
 derby.log
 
+# IntelliJ
 .idea/
 *.iml

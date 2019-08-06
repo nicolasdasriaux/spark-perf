@@ -27,7 +27,7 @@ class CoalesceRepartitionSpec extends FlatSpec with Matchers with BeforeAndAfter
     val ordersDS = ECommerce.ordersDS(10, customerId => (customerId + 1) * 1000)
 
     val orderCountsDF = ordersDS
-      .groupBy($"customerId")
+      .groupBy($"customer_id")
       .agg(count($"id").as("order_count"))
 
     orderCountsDF.write
@@ -43,7 +43,7 @@ class CoalesceRepartitionSpec extends FlatSpec with Matchers with BeforeAndAfter
     val ordersDS = ECommerce.ordersDS(10, customerId => (customerId + 1) * 1000)
 
     val orderCountsDF = ordersDS
-      .groupBy($"customerId")
+      .groupBy($"customer_id")
       .agg(count($"id").as("order_count"))
       .coalesce(20)
 
@@ -60,7 +60,7 @@ class CoalesceRepartitionSpec extends FlatSpec with Matchers with BeforeAndAfter
     val ordersDS = ECommerce.ordersDS(10, customerId => (customerId + 1) * 1000)
 
     val orderCountsDF = ordersDS
-      .groupBy($"customerId")
+      .groupBy($"customer_id")
       .agg(count($"id").as("order_count"))
       .repartition(20)
 
