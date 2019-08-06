@@ -113,7 +113,7 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * Order: 400 = 4 * 100
       */
 
-    val customersDS = ECommerce.customersDS(4) //
+    val customersDS = ECommerce.customersWithKnownRowCountDS(4) //
     val ordersDS = ECommerce.ordersWithKnownRowCountDS(4, customerId => 100)
 
     /**

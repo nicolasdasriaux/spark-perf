@@ -13,7 +13,6 @@ HADOOP_HOME=C:\development\programs\hadoop-2.7.1
 winutils chmod -R 777 C:\tmp\hive
 ```
 
-
 Schema auto-scan
 JSON Line
 CSV with CR
@@ -47,14 +46,16 @@ http://localhost:4040
 * **FileScan parquet** \
   `default.orders_no_bucket` \
   [`id`#8L,`customer_id`#9L] \
-  Batched: true, Format: Parquet, Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/orders_no_bucket], PartitionFilters: [], \
+  Batched: true, Format: Parquet, \
+  Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/orders_no_bucket], \
+  PartitionFilters: [], \
   **PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])]**, \
   ReadSchema: struct<`id`:bigint,`customer_id`:bigint>
 
 * **Filter** \
   `customer_id`#9L IN (1,2,3,4,5,6,7,8,9,10)
 
-* **HashAggregate**
+* **HashAggregate** \
   (keys=[`customer_id`#9L], \
   functions=[partial_count(`id`#8L)], \
   output=[`customer_id`#9L, `count`#19L])
@@ -71,8 +72,10 @@ http://localhost:4040
 
 * **FileScan parquet** \
   `default.orders_bucket` \
-  [`id`#29L,`customer_id`#30L]
-  Batched: true, Format: Parquet, Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/orders_bucket], PartitionFilters: [], \
+  [`id`#29L,`customer_id`#30L] \
+  Batched: true, Format: Parquet, \
+  Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/orders_bucket], \
+  PartitionFilters: [], \
   **PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])]**, \
   ReadSchema: struct<`id`:bigint,`customer_id`:bigint>, \
   **SelectedBucketsCount: 7 out of 10**
@@ -97,10 +100,10 @@ http://localhost:4040
 * **FileScan parquet** \
   `default.country_customers_no_partition` \
   [`id`#13L,`name`#14,`country`#15] \
-  Batched: true, Format: Parquet,
+  Batched: true, Format: Parquet, \
   Location: **InMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
   PartitionFilters: [], \
-  PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)],
+  PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
   ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
   
 * **Filter** \
@@ -111,7 +114,7 @@ http://localhost:4040
 
 ## With Partitioning
 
-* FileScan parquet \
+* **FileScan parquet** \
   default.country_customers_partition \
   [`id`#33L,`name`#34,`country`#35] \
   Batched: true, Format: Parquet, \
@@ -123,8 +126,126 @@ http://localhost:4040
 
 # Shuffled Hash Join
 
+* **LocalTableScan** \
+  [`id`#2L, `name`#3]
+
+* **LocalTableScan** \
+  [`id`#7L, `customer_id`#8L]
+
+* **Exchange** \
+  hashpartitioning(`id`#2L, 100)
+  
+* **Exchange** \
+  hashpartitioning(`customer_id`#8L, 100)
+  
+* **ShuffledHashJoin** \
+  [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
+  
+* **Project** \
+  [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
+
 # Sort Merge Join
+
+* **LocalTableScan** \
+  [`id`#2L, `name`#3]
+  
+* **LocalTableScan** \
+  [`id`#7L, `customer_id`#8L]
+  
+* **Exchange** \
+  hashpartitioning(`id`#2L, 200)
+  
+* **Exchange** \
+  hashpartitioning(`customer_id`#8L, 200)
+  
+* **Sort** \
+  [`id`#2L ASC NULLS FIRST], false, 0
+  
+* **Sort** \
+  [`customer_id`#8L ASC NULLS FIRST], false, 0
+  
+* **SortMergeJoin** \
+  [`id`#2L], [`customer_id`#8L], Inner
+  
+* **Project** \
+  [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
 # Join Skew
 
 # Coalesce and Repartition
+
+## Without coalesce nor repartition
+
+* **Scan** \
+  [obj#2]
+
+**Stage 0** (8 tasks)
+
+* **SerializeFromObject** \
+  [assertnotnull(input[0, Order, true]).id AS `id`#3L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#4L]
+  
+* **Project** \
+  [`customer_id`#4L]
+
+* **HashAggregate** \
+  (keys=[`customer_id`#4L], \
+  functions=[partial_count(1)], \
+  output=[`customer_id`#4L, `count`#15L])
+  
+* **Exchange** \
+  hashpartitioning(`customer_id`#4L, 200)
+
+**Stage 1** (200 tasks)
+
+* **HashAggregate** \
+  (keys=[`customer_id`#4L], \
+  functions=[count(1)], \
+  output=[`customer_id`#4L, `order_count`#9L])
+  
+* **Execute CreateDataSourceTableAsSelectCommand** \
+  `order_counts`, Overwrite, [`customer_id`, `order_count`]
+ 
+ ## With coalesce
+
+* **Scan** \
+  [obj#18]
+
+**Stage 2** (8 tasks)
+
+* **SerializeFromObject** \
+  [assertnotnull(input[0, Order, true]).id AS `id`#19L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#20L]
+
+* **Project** \
+  [`customer_id`#20L]
+
+* **HashAggregate** \
+  (keys=[`customer_id`#20L],
+  functions=[partial_count(1)],
+  output=[`customer_id`#20L, `count`#31L])
+
+* **Exchange** \
+  hashpartitioning(`customer_id`#20L, 200)
+
+**Stage 3** (20 tasks)
+
+* **HashAggregate** \
+  (keys=[`customer_id`#20L], \
+  functions=[count(1)], \
+  output=[`customer_id`#20L, `order_count`#25L])
+  
+* **Coalesce** \
+  20
+
+* **Execute CreateDataSourceTableAsSelectCommand** \
+  `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
+
+# With repartition
+
+Execute CreateDataSourceTableAsSelectCommand CreateDataSourceTableAsSelectCommand `order_counts_repartition`, Overwrite, [customer_id, order_count]
++- Exchange RoundRobinPartitioning(20)
+   +- *(2) HashAggregate(keys=[customer_id#36L], functions=[count(1)], output=[customer_id#36L, order_count#41L])
+      +- Exchange hashpartitioning(customer_id#36L, 200)
+         +- *(1) HashAggregate(keys=[customer_id#36L], functions=[partial_count(1)], output=[customer_id#36L, count#47L])
+            +- *(1) Project [customer_id#36L]
+               +- *(1) SerializeFromObject [assertnotnull(input[0, Order, true]).id AS id#35L, assertnotnull(input[0, Order, true]).customer_id AS customer_id#36L]
+                  +- Scan[obj#34]
