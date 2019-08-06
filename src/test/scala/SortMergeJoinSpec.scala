@@ -53,7 +53,7 @@ class SortMergeJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
       .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
 
-    customersAndOrdersDF.queryExecution.toString().contains("SortMergeJoin") should be(true)
     customersAndOrdersDF.collect()
+    customersAndOrdersDF.queryExecution.toString().contains("SortMergeJoin") should be(true)
   }
 }

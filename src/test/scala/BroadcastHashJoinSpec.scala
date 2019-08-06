@@ -116,8 +116,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * YES, it applies.
       */
 
-    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
     customersAndOrdersDF.collect()
+    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
   }
 
   it should "be performed when broadcast function applied" in {
@@ -204,8 +204,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * NO, it doesn't apply.
       */
 
-    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
     customersAndOrdersDF.collect()
+    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
   }
 
   it should "be performed when broadcast hint is applied" in {
@@ -219,7 +219,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       .join(ordersDS.as("ord"), $"cst.id" === $"ord.customerId")
       .select($"cst.id".as("customerId"), $"cst.name", $"ord.id".as("orderId"))
 
-    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
     customersAndOrdersDF.collect()
+    customersAndOrdersDF.queryExecution.toString().contains("BroadcastHashJoin") should be(true)
   }
 }
