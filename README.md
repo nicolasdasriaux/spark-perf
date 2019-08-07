@@ -20,9 +20,9 @@ JDBC
 
 http://localhost:4040
 
-# Broadcast Hash Join
+# Join Algorithms
 
-## Size, `broadcast` and `hint("broadcast")`
+## Broadcast Hash Join
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -38,6 +38,83 @@ http://localhost:4040
   
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
+  
+## Shuffled Hash Join
+
+* **LocalTableScan** \
+  [`id`#2L, `name`#3]
+
+* **LocalTableScan** \
+  [`id`#7L, `customer_id`#8L]
+
+* **Exchange** \
+  hashpartitioning(`id`#2L, 100)
+  
+* **Exchange** \
+  hashpartitioning(`customer_id`#8L, 100)
+  
+* **ShuffledHashJoin** \
+  [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
+  
+* **Project** \
+  [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
+
+## Sort Merge Join
+
+* **LocalTableScan** \
+  [`id`#2L, `name`#3]
+  
+* **LocalTableScan** \
+  [`id`#7L, `customer_id`#8L]
+  
+* **Exchange** \
+  hashpartitioning(`id`#2L, 200)
+  
+* **Exchange** \
+  hashpartitioning(`customer_id`#8L, 200)
+  
+* **Sort** \
+  [`id`#2L ASC NULLS FIRST], false, 0
+  
+* **Sort** \
+  [`customer_id`#8L ASC NULLS FIRST], false, 0
+  
+* **SortMergeJoin** \
+  [`id`#2L], [`customer_id`#8L], Inner
+  
+* **Project** \
+  [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
+
+# Partitioning
+
+## Without Partitioning
+
+* **FileScan parquet** \
+  `default.country_customers_no_partition` \
+  [`id`#13L,`name`#14,`country`#15] \
+  Batched: true, Format: Parquet, \
+  Location: **InMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
+  PartitionFilters: [], \
+  PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
+  ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
+  
+* **Filter** \
+  (isnotnull(`country`#15) && (`country`#15 = France))
+  
+* **Project** \
+  [`id`#13L, `name`#14, `country`#15]
+
+## With Partitioning
+
+* **FileScan parquet** \
+  default.country_customers_partition \
+  [`id`#33L,`name`#34,`country`#35] \
+  Batched: true, Format: Parquet, \
+  Location: **PrunedInMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_cus..., \
+  **PartitionCount: 1**, \
+  **PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]**, \
+  PushedFilters: [], \
+  ReadSchema: struct<`id`:bigint,`name`:string>
 
 # Bucketing
 
@@ -93,104 +170,9 @@ http://localhost:4040
   functions=[**count**(`id`#29L)], \
   output=[`customer_id`#30L, `order_count`#36L])
 
-# Partitioning
+# Coalescing and Repartitioning
 
-## Without Partitioning
-
-* **FileScan parquet** \
-  `default.country_customers_no_partition` \
-  [`id`#13L,`name`#14,`country`#15] \
-  Batched: true, Format: Parquet, \
-  Location: **InMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
-  PartitionFilters: [], \
-  PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
-  ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
-  
-* **Filter** \
-  (isnotnull(`country`#15) && (`country`#15 = France))
-  
-* **Project** \
-  [`id`#13L, `name`#14, `country`#15]
-
-## With Partitioning
-
-* **FileScan parquet** \
-  default.country_customers_partition \
-  [`id`#33L,`name`#34,`country`#35] \
-  Batched: true, Format: Parquet, \
-  Location: **PrunedInMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_cus..., \
-  **PartitionCount: 1**, \
-  **PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]**, \
-  PushedFilters: [], \
-  ReadSchema: struct<`id`:bigint,`name`:string>
-
-# Shuffled Hash Join
-
-* **LocalTableScan** \
-  [`id`#2L, `name`#3]
-
-* **LocalTableScan** \
-  [`id`#7L, `customer_id`#8L]
-
-* **Exchange** \
-  hashpartitioning(`id`#2L, 100)
-  
-* **Exchange** \
-  hashpartitioning(`customer_id`#8L, 100)
-  
-* **ShuffledHashJoin** \
-  [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
-  
-* **Project** \
-  [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
-
-# Sort Merge Join
-
-* **LocalTableScan** \
-  [`id`#2L, `name`#3]
-  
-* **LocalTableScan** \
-  [`id`#7L, `customer_id`#8L]
-  
-* **Exchange** \
-  hashpartitioning(`id`#2L, 200)
-  
-* **Exchange** \
-  hashpartitioning(`customer_id`#8L, 200)
-  
-* **Sort** \
-  [`id`#2L ASC NULLS FIRST], false, 0
-  
-* **Sort** \
-  [`customer_id`#8L ASC NULLS FIRST], false, 0
-  
-* **SortMergeJoin** \
-  [`id`#2L], [`customer_id`#8L], Inner
-  
-* **Project** \
-  [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
-
-# Join Skew
-
-## Observing join skew
-
-**Stage 2**
-
-![Skew Event Timeline](skew-event-timeline.png)
-
-![Skew Summary Metrics](skew-summary-metrics.png)
-
-## Fixing join skew with salting
-
-**Stage 5**
-
-![Salting Event Timeline](salting-event-timeline.png)
-
-![Salting Summary Metrics](salting-summary-metrics.png)
-
-# Coalesce and Repartition
-
-## Without coalesce nor repartition
+## Neither coalescing nor repartitioning
 
 * **Scan** \
   [obj#2]
@@ -221,7 +203,7 @@ http://localhost:4040
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts`, Overwrite, [`customer_id`, `order_count`]
  
-## With coalesce
+## Coalescing
 
 * **Scan** \
   [obj#18]
@@ -255,7 +237,7 @@ http://localhost:4040
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
 
-## With repartition
+## Repartitioning
 
 * **Scan** \
   [obj#34]
@@ -290,3 +272,21 @@ http://localhost:4040
 
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
+
+# Join Skew
+
+## Observing skew
+
+**Stage 2**
+
+![Skew Event Timeline](skew-event-timeline.png)
+
+![Skew Summary Metrics](skew-summary-metrics.png)
+
+## Fixing skew with salting
+
+**Stage 5**
+
+![Salting Event Timeline](salting-event-timeline.png)
+
+![Salting Summary Metrics](salting-summary-metrics.png)
