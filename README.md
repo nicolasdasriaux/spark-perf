@@ -28,19 +28,19 @@ See `BroadcastHashJoinSpec` class
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
-  
+
 * **LocalTableScan** \
   [`id`#7L, `customer_id`#8L]
-  
+
 * **BroadcastExchange** \
   _HashedRelationBroadcastMode_:warning:(List(input[0, bigint, false]))
-  
+
 * **BroadcastHashJoin**:warning: \
   [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
-  
+
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
-  
+
 # Shuffled Hash Join
 
 See `ShuffledHashJoinSpec` class
@@ -55,13 +55,13 @@ See `ShuffledHashJoinSpec` class
 
 * **Exchange** \
   _hashpartitioning_:warning:(`id`#2L, 100)
-  
+
 * **Exchange** \
   _hashpartitioning_:warning:(`customer_id`#8L, 100)
-  
+
 * **ShuffledHashJoin**:warning: \
   [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
-  
+
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
@@ -73,25 +73,25 @@ See `SortMergeJoinSpec` class
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
-  
+
 * **LocalTableScan** \
   [`id`#7L, `customer_id`#8L]
-  
+
 * **Exchange** \
   hashpartitioning(`id`#2L, 200)
-  
+
 * **Exchange** \
   hashpartitioning(`customer_id`#8L, 200)
-  
+
 * **Sort**:warning: \
   [`id`#2L ASC NULLS FIRST], false, 0
-  
+
 * **Sort**:warning: \
   [`customer_id`#8L ASC NULLS FIRST], false, 0
-  
+
 * **SortMergeJoin**:warning: \
   [`id`#2L], [`customer_id`#8L], Inner
-  
+
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
@@ -111,10 +111,10 @@ See `PartitioningSpec` class
   PartitionFilters: [], \
   PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
   ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
-  
+
 * **Filter** \
   (isnotnull(`country`#15) && (`country`#15 = France))
-  
+
 * **Project** \
   [`id`#13L, `name`#14, `country`#15]
 
@@ -131,7 +131,7 @@ See `PartitioningSpec` class
   _PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]_:warning:, \
   PushedFilters: [], \
   ReadSchema: struct<`id`:bigint,`name`:string>
-  
+
 * :warning:
 
 * :warning:
@@ -233,10 +233,10 @@ See `CoalesceRepartitionSpec` class
     (keys=[`customer_id`#4L], \
     functions=[count(1)], \
     output=[`customer_id`#4L, `order_count`#9L])
-  
+
   * **Execute CreateDataSourceTableAsSelectCommand** \
     `order_counts`, Overwrite, [`customer_id`, `order_count`]
- 
+
 ## Coalescing
 
 **Details from Query 1**
@@ -268,7 +268,7 @@ See `CoalesceRepartitionSpec` class
     (keys=[`customer_id`#20L], \
     functions=[count(1)], \
     output=[`customer_id`#20L, `order_count`#25L])
-  
+
   * **Coalesce**:warning: \
     _20_:warning:
 
@@ -290,7 +290,7 @@ See `CoalesceRepartitionSpec` class
 
   * **Project** \
     [`customer_id`#36L]
-  
+
   * **HashAggregate** \
     (keys=[`customer_id`#36L], \
     functions=[partial_count(1)], \
@@ -322,16 +322,51 @@ See `JoinSkewSpec` class
 
 ## Observing skew
 
-**Stage 2**
+**Details for Query 0**
 
-![Skew Event Timeline](skew-event-timeline.png)
+* Click on Job **0** link
 
-![Skew Summary Metrics](skew-summary-metrics.png)
+**Details for Job 0**
+
+* Click on **Stage 2** (longest running stage) in **Event Timeline** after unfolding
+* Or click on **Stage 2** (stage where join is performed) in **DAG Visualization**
+
+**Details for Stage 2**
+
+**Details for Query 1**
+
+* Click on Job **1** link
+
+**Details for Job 1**
+
+* Click on **Stage 5** (longest running stage) in **Event Timeline** after unfolding
+* Or click on **Stage 5** (stage where join is performed) in **DAG Visualization**
+
+**Details for Stage 5**
+
+Uneven load :warning:
+
+* **Event Timeline** diagram
+
+  ![Skew Event Timeline](skew-event-timeline.png)
+
+* **Summary Metrics for 200 Completed Tasks** table
+
+  ![Skew Summary Metrics](skew-summary-metrics.png)
+
+* **Tasks** table
 
 ## Fixing skew with salting
 
-**Stage 5**
 
-![Salting Event Timeline](salting-event-timeline.png)
+**Details for Stage 5**
 
-![Salting Summary Metrics](salting-summary-metrics.png)
+* **Event Timeline** diagram
+
+  ![Salting Event Timeline](salting-event-timeline.png)
+
+* **Summary Metrics for 200 Completed Tasks** table
+
+  ![Salting Summary Metrics](salting-summary-metrics.png)
+
+* **Tasks** table
