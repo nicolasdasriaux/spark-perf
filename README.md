@@ -99,7 +99,7 @@ See `PartitioningSpec` class
   `default.country_customers_no_partition` \
   [`id`#13L,`name`#14,`country`#15] \
   Batched: true, Format: Parquet, \
-  Location: _InMemoryFileIndex_:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
+  Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
   PartitionFilters: [], \
   PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
   ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
@@ -121,6 +121,10 @@ See `PartitioningSpec` class
   _PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]_:warning:, \
   PushedFilters: [], \
   ReadSchema: struct<`id`:bigint,`name`:string>
+  
+* :warning:
+
+* :warning:
 
 # Bucketing
 
@@ -189,7 +193,7 @@ See `CoalesceRepartitionSpec` class
 * **Scan** \
   [obj#2]
 
-**Stage 0** (8 tasks :warning:)
+**Stage 0** (8 tasks:warning:)
 
 * **SerializeFromObject** \
   [assertnotnull(input[0, Order, true]).id AS `id`#3L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#4L]
@@ -205,7 +209,7 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#4L, 200)
 
-**Stage 1** (200 tasks :warning:)
+**Stage 1** (200 tasks:warning:)
 
 * **HashAggregate** \
   (keys=[`customer_id`#4L], \
@@ -220,7 +224,7 @@ See `CoalesceRepartitionSpec` class
 * **Scan** \
   [obj#18]
 
-**Stage 2** (8 tasks :warning:)
+**Stage 2** (8 tasks:warning:)
 
 * **SerializeFromObject** \
   [assertnotnull(input[0, Order, true]).id AS `id`#19L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#20L]
@@ -236,7 +240,7 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#20L, 200)
 
-**Stage 3** (20 tasks :warning:)
+**Stage 3** (20 tasks:warning:)
 
 * **HashAggregate** \
   (keys=[`customer_id`#20L], \
@@ -254,7 +258,7 @@ See `CoalesceRepartitionSpec` class
 * **Scan** \
   [obj#34]
 
-**Stage 4** (8 tasks :warning:)
+**Stage 4** (8 tasks:warning:)
 
 * **SerializeFromObject** \
   [assertnotnull(input[0, Order, true]).id AS `id`#35L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#36L]
@@ -270,7 +274,7 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#36L, 200)
 
-**Stage 5** (200 tasks :warning:)
+**Stage 5** (200 tasks:warning:)
 
 * **HashAggregate** \
   (keys=[`customer_id`#36L], \
@@ -280,7 +284,7 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   _RoundRobinPartitioning(20)_:warning:
 
-**Stage 6** (20 tasks :warning:)
+**Stage 6** (20 tasks:warning:)
 
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
