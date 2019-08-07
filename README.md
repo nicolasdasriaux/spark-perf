@@ -333,19 +333,6 @@ See `JoinSkewSpec` class
 
 **Details for Stage 2**
 
-**Details for Query 1**
-
-* Click on Job **1** link
-
-**Details for Job 1**
-
-* Click on **Stage 5** (longest running stage) in **Event Timeline** after unfolding
-* Or click on **Stage 5** (stage where join is performed) in **DAG Visualization**
-
-**Details for Stage 5**
-
-Uneven load :warning:
-
 * **Event Timeline** diagram
 
   ![Skew Event Timeline](skew-event-timeline.png)
@@ -358,6 +345,14 @@ Uneven load :warning:
 
 ## Fixing skew with salting
 
+**Details for Query 1**
+
+* Click on Job **1** link
+
+**Details for Job 1**
+
+* Click on **Stage 5** (longest running stage) in **Event Timeline** after unfolding
+* Or click on **Stage 5** (stage where join is performed) in **DAG Visualization**
 
 **Details for Stage 5**
 
