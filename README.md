@@ -99,7 +99,7 @@ See `PartitioningSpec` class
   `default.country_customers_no_partition` \
   [`id`#13L,`name`#14,`country`#15] \
   Batched: true, Format: Parquet, \
-  Location: **InMemoryFileIndex**:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
+  Location: _InMemoryFileIndex_:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
   PartitionFilters: [], \
   PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
   ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
@@ -116,9 +116,9 @@ See `PartitioningSpec` class
   default.country_customers_partition \
   [`id`#33L,`name`#34,`country`#35] \
   Batched: true, Format: Parquet, \
-  Location: **PrunedInMemoryFileIndex**:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_cus..., \
-  **PartitionCount: 1**:warning:, \
-  **PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]**:warning:, \
+  Location: _PrunedInMemoryFileIndex_:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_cus..., \
+  _PartitionCount: 1_:warning:, \
+  _PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]_:warning:, \
   PushedFilters: [], \
   ReadSchema: struct<`id`:bigint,`name`:string>
 
@@ -134,7 +134,7 @@ See `BucketingSpec` class
   Batched: true, Format: Parquet, \
   Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/orders_no_bucket], \
   PartitionFilters: [], \
-  **PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])]**, \
+  PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])], \
   ReadSchema: struct<`id`:bigint,`customer_id`:bigint>
 
 * **Filter** \
@@ -142,7 +142,7 @@ See `BucketingSpec` class
 
 * **HashAggregate** \
   (keys=[`customer_id`#9L], \
-  functions=[**partial_count**:warning:(`id`#8L)], \
+  functions=[_partial_count_:warning:(`id`#8L)], \
   output=[`customer_id`#9L, `count`#19L])
 
 * **Exchange**:warning: \
@@ -150,7 +150,7 @@ See `BucketingSpec` class
 
 * **HashAggregate** \
   (keys=[`customer_id`#9L], \
-  functions=[**count**:warning:(`id`#8L)], \
+  functions=[_count_:warning:(`id`#8L)], \
   output=[`customer_id`#9L, `order_count`#15L])
 
 ## With Bucketing
@@ -163,21 +163,21 @@ See `BucketingSpec` class
   PartitionFilters: [], \
   PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])], \
   ReadSchema: struct<`id`:bigint,`customer_id`:bigint>, \
-  **SelectedBucketsCount: 7 out of 10**:warning:
+  _SelectedBucketsCount: 7 out of 10_:warning:
 
 * **Filter** \
   `customer_id`#30L IN (1,2,3,4,5,6,7,8,9,10)
 
 * **HashAggregate** \
   (keys=[`customer_id`#30L], \
-  functions=[**partial_count**:warning:(`id`#29L)], \
+  functions=[_partial_count_:warning:(`id`#29L)], \
   output=[`customer_id`#30L, `count`#40L])
 
 * :warning:
 
 * **HashAggregate** \
   (keys=[`customer_id`#30L], \
-  functions=[**count**:warning:(`id`#29L)], \
+  functions=[_count_:warning:(`id`#29L)], \
   output=[`customer_id`#30L, `order_count`#36L])
 
 # Coalescing and Repartitioning
@@ -244,7 +244,7 @@ See `CoalesceRepartitionSpec` class
   output=[`customer_id`#20L, `order_count`#25L])
   
 * **Coalesce**:warning: \
-  **20**:warning:
+  _20_:warning:
 
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
@@ -278,7 +278,7 @@ See `CoalesceRepartitionSpec` class
   output=[`customer_id`#36L, `order_count`#41L])
 
 * **Exchange** \
-  **RoundRobinPartitioning(20)**:warning:
+  _RoundRobinPartitioning(20)_:warning:
 
 **Stage 6** (20 tasks :warning:)
 
