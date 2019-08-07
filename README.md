@@ -1,3 +1,4 @@
+# Setup
 
 https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe
 
@@ -20,9 +21,39 @@ JDBC
 
 http://localhost:4040
 
-# Broadcast Hash Join
+# Instructions
 
-See `BroadcastHashJoinSpec` class
+## Broadcast Hash Join
+
+* Go to `BroadcastHashJoinSpec` class
+
+## Shuffled Hash Join
+
+* Go to `ShuffledHashJoinSpec` class
+
+## Sort Merge Join
+
+* Go to `SortMergeJoinSpec` class
+
+## Partitioning
+
+* Go to `PartitioningSpec` class
+
+## Bucketing
+
+* Go to `BucketingSpec` class
+
+## Coalescing and Repartitioning
+
+* Go to `CoalesceRepartitionSpec` class
+
+## Join Skew
+
+* Go to `JoinSkewSpec` class
+
+# Hints for using Spark UI
+
+## Broadcast Hash Join
 
 **Details for Query 0** (or 1 or 2)
 
@@ -41,9 +72,7 @@ See `BroadcastHashJoinSpec` class
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-# Shuffled Hash Join
-
-See `ShuffledHashJoinSpec` class
+## Shuffled Hash Join
 
 **Details for Query 0**
 
@@ -65,9 +94,7 @@ See `ShuffledHashJoinSpec` class
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-# Sort Merge Join
-
-See `SortMergeJoinSpec` class
+## Sort Merge Join
 
 **Details for Query 0**
 
@@ -95,11 +122,9 @@ See `SortMergeJoinSpec` class
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-# Partitioning
+## Partitioning
 
-See `PartitioningSpec` class
-
-## Without Partitioning
+### Without Partitioning
 
 **Details for Query 1**
 
@@ -118,7 +143,7 @@ See `PartitioningSpec` class
 * **Project** \
   [`id`#13L, `name`#14, `country`#15]
 
-## With Partitioning
+### With Partitioning
 
 **Details for Query 3**
 
@@ -136,11 +161,9 @@ See `PartitioningSpec` class
 
 * :warning:
 
-# Bucketing
+## Bucketing
 
-See `BucketingSpec` class
-
-## Without bucketing
+### Without bucketing
 
 **Details for Query 1**
 
@@ -169,7 +192,7 @@ See `BucketingSpec` class
   functions=[_count_:warning:(`id`#8L)], \
   output=[`customer_id`#9L, `order_count`#15L])
 
-## With Bucketing
+### With Bucketing
 
 **Details for Query 3**
 
@@ -198,11 +221,9 @@ See `BucketingSpec` class
   functions=[_count_:warning:(`id`#29L)], \
   output=[`customer_id`#30L, `order_count`#36L])
 
-# Coalescing and Repartitioning
+## Coalescing and Repartitioning
 
-See `CoalesceRepartitionSpec` class
-
-## Neither coalescing nor repartitioning
+### Neither coalescing nor repartitioning
 
 **Details from Query 0**
 
@@ -237,7 +258,7 @@ See `CoalesceRepartitionSpec` class
   * **Execute CreateDataSourceTableAsSelectCommand** \
     `order_counts`, Overwrite, [`customer_id`, `order_count`]
 
-## Coalescing
+### Coalescing
 
 **Details from Query 1**
 
@@ -275,7 +296,7 @@ See `CoalesceRepartitionSpec` class
   * **Execute CreateDataSourceTableAsSelectCommand** \
     `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
 
-## Repartitioning
+### Repartitioning
 
 **Details from Query 2**
 
@@ -316,11 +337,9 @@ See `CoalesceRepartitionSpec` class
   * **Execute CreateDataSourceTableAsSelectCommand** \
     `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
 
-# Join Skew
+## Join Skew
 
-See `JoinSkewSpec` class
-
-## Observing skew
+### Observing skew
 
 **Details for Query 0**
 
@@ -343,7 +362,7 @@ See `JoinSkewSpec` class
 
 * **Tasks** table
 
-## Fixing skew with salting
+### Fixing skew with salting
 
 **Details for Query 1**
 
