@@ -51,7 +51,7 @@ http://localhost:4040
 
 * Go to `JoinSkewSpec` class
 
-# Hints for using Spark UI
+# Hints for Profiling with Spark UI
 
 ## Broadcast Hash Join
 
