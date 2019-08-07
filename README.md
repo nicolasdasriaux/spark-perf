@@ -20,9 +20,9 @@ JDBC
 
 http://localhost:4040
 
-# Join Algorithms
+# Broadcast Hash Join
 
-## Broadcast Hash Join
+See `BroadcastHashJoinSpec` class
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -39,7 +39,9 @@ http://localhost:4040
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
   
-## Shuffled Hash Join
+# Shuffled Hash Join
+
+See `ShuffledHashJoinSpec` class
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -59,7 +61,9 @@ http://localhost:4040
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-## Sort Merge Join
+# Sort Merge Join
+
+See `SortMergeJoinSpec` class
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -86,6 +90,8 @@ http://localhost:4040
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
 # Partitioning
+
+See `PartitioningSpec` class
 
 ## Without Partitioning
 
@@ -117,6 +123,8 @@ http://localhost:4040
   ReadSchema: struct<`id`:bigint,`name`:string>
 
 # Bucketing
+
+See `BucketingSpec` class
 
 ## Without bucketing
 
@@ -171,6 +179,8 @@ http://localhost:4040
   output=[`customer_id`#30L, `order_count`#36L])
 
 # Coalescing and Repartitioning
+
+See `CoalesceRepartitionSpec` class
 
 ## Neither coalescing nor repartitioning
 
@@ -274,6 +284,8 @@ http://localhost:4040
   `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
 
 # Join Skew
+
+See `JoinSkewSpec` class
 
 ## Observing skew
 
