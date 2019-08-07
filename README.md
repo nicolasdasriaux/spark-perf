@@ -172,6 +172,22 @@ http://localhost:4040
 
 # Join Skew
 
+## Observing join skew
+
+**Stage 2**
+
+![Skew Event Timeline](skew-event-timeline.png)
+
+![Skew Summary Metrics](skew-summary-metrics.png)
+
+## Fixing join skew with salting
+
+**Stage 5**
+
+![Salting Event Timeline](salting-event-timeline.png)
+
+![Salting Summary Metrics](salting-summary-metrics.png)
+
 # Coalesce and Repartition
 
 ## Without coalesce nor repartition
@@ -205,7 +221,7 @@ http://localhost:4040
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts`, Overwrite, [`customer_id`, `order_count`]
  
- ## With coalesce
+## With coalesce
 
 * **Scan** \
   [obj#18]
@@ -239,13 +255,38 @@ http://localhost:4040
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
 
-# With repartition
+## With repartition
 
-Execute CreateDataSourceTableAsSelectCommand CreateDataSourceTableAsSelectCommand `order_counts_repartition`, Overwrite, [customer_id, order_count]
-+- Exchange RoundRobinPartitioning(20)
-   +- *(2) HashAggregate(keys=[customer_id#36L], functions=[count(1)], output=[customer_id#36L, order_count#41L])
-      +- Exchange hashpartitioning(customer_id#36L, 200)
-         +- *(1) HashAggregate(keys=[customer_id#36L], functions=[partial_count(1)], output=[customer_id#36L, count#47L])
-            +- *(1) Project [customer_id#36L]
-               +- *(1) SerializeFromObject [assertnotnull(input[0, Order, true]).id AS id#35L, assertnotnull(input[0, Order, true]).customer_id AS customer_id#36L]
-                  +- Scan[obj#34]
+* **Scan** \
+  [obj#34]
+
+**Stage 4** (8 tasks)
+
+* **SerializeFromObject** \
+  [assertnotnull(input[0, Order, true]).id AS `id`#35L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#36L]
+
+* **Project** \
+  [`customer_id`#36L]
+  
+* **HashAggregate** \
+  (keys=[`customer_id`#36L], \
+  functions=[partial_count(1)], \
+  output=[`customer_id`#36L, count#47L])
+
+* **Exchange** \
+  hashpartitioning(`customer_id`#36L, 200)
+
+**Stage 5** (200 tasks)
+
+* **HashAggregate** \
+  (keys=[`customer_id`#36L], \
+  functions=[count(1)], \
+  output=[`customer_id`#36L, `order_count`#41L])
+
+* **Exchange** \
+  RoundRobinPartitioning(20)
+
+**Stage 6** (20 tasks)
+
+* **Execute CreateDataSourceTableAsSelectCommand** \
+  `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]

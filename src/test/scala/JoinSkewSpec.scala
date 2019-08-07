@@ -35,25 +35,6 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .saveAsTable("customers_orders_skew")
   }
 
-  it should "be fixable with broadcasting" in {
-    implicit val spark: SparkSession = sparkSession
-    import org.apache.spark.sql.functions._
-    import spark.implicits._
-
-    val customersDS = ECommerce.customersDS(10)
-    val ordersDS = ECommerce.ordersDS(10, customerId => if (customerId == 1) 1000000 else 5)
-
-    val broadcastCustomersDS = broadcast(customersDS)
-
-    val customersAndOrdersDF = broadcastCustomersDS.as("cst")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
-      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
-
-    customersAndOrdersDF.write
-      .mode(SaveMode.Overwrite)
-      .saveAsTable("customers_orders_broadcast")
-  }
-
   it should "be fixable with salting" in {
     implicit val spark: SparkSession = sparkSession
     import org.apache.spark.sql.functions._
@@ -62,7 +43,7 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val customersDS = ECommerce.customersDS(10)
     val ordersDS = ECommerce.ordersDS(10, customerId => if (customerId == 1) 1000000 else 5)
 
-    val saltCount = 200
+    val saltCount = 100
     val saltedCustomersDF = customersDS.withColumn("salt", explode(lit((0 until saltCount).toArray)))
     val saltedOrdersDF = ordersDS.withColumn("salt", round(rand * (saltCount - 1)).cast(IntegerType))
 
