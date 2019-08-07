@@ -31,9 +31,9 @@ See `BroadcastHashJoinSpec` class
   [`id`#7L, `customer_id`#8L]
   
 * **BroadcastExchange** \
-  HashedRelationBroadcastMode(List(input[0, bigint, false]))
+  _HashedRelationBroadcastMode_:warning:(List(input[0, bigint, false]))
   
-* **BroadcastHashJoin** \
+* **BroadcastHashJoin**:warning: \
   [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
   
 * **Project** \
@@ -50,12 +50,12 @@ See `ShuffledHashJoinSpec` class
   [`id`#7L, `customer_id`#8L]
 
 * **Exchange** \
-  hashpartitioning(`id`#2L, 100)
+  _hashpartitioning_:warning:(`id`#2L, 100)
   
 * **Exchange** \
-  hashpartitioning(`customer_id`#8L, 100)
+  _hashpartitioning_:warning:(`customer_id`#8L, 100)
   
-* **ShuffledHashJoin** \
+* **ShuffledHashJoin**:warning: \
   [`id`#2L], [`customer_id`#8L], Inner, BuildLeft
   
 * **Project** \
@@ -77,13 +77,13 @@ See `SortMergeJoinSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#8L, 200)
   
-* **Sort** \
+* **Sort**:warning: \
   [`id`#2L ASC NULLS FIRST], false, 0
   
-* **Sort** \
+* **Sort**:warning: \
   [`customer_id`#8L ASC NULLS FIRST], false, 0
   
-* **SortMergeJoin** \
+* **SortMergeJoin**:warning: \
   [`id`#2L], [`customer_id`#8L], Inner
   
 * **Project** \
@@ -99,7 +99,7 @@ See `PartitioningSpec` class
   `default.country_customers_no_partition` \
   [`id`#13L,`name`#14,`country`#15] \
   Batched: true, Format: Parquet, \
-  Location: **InMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
+  Location: **InMemoryFileIndex**:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_customers..., \
   PartitionFilters: [], \
   PushedFilters: [IsNotNull(`country`), EqualTo(`country`,France)], \
   ReadSchema: struct<`id`:bigint,`name`:string,`country`:string>
@@ -116,9 +116,9 @@ See `PartitioningSpec` class
   default.country_customers_partition \
   [`id`#33L,`name`#34,`country`#35] \
   Batched: true, Format: Parquet, \
-  Location: **PrunedInMemoryFileIndex**[file:/C:/development/presentations/spark-perf/spark-warehouse/country_cus..., \
-  **PartitionCount: 1**, \
-  **PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]**, \
+  Location: **PrunedInMemoryFileIndex**:warning:[file:/C:/development/presentations/spark-perf/spark-warehouse/country_cus..., \
+  **PartitionCount: 1**:warning:, \
+  **PartitionFilters: [isnotnull(`country`#35), (`country`#35 = France)]**:warning:, \
   PushedFilters: [], \
   ReadSchema: struct<`id`:bigint,`name`:string>
 
@@ -142,15 +142,15 @@ See `BucketingSpec` class
 
 * **HashAggregate** \
   (keys=[`customer_id`#9L], \
-  functions=[partial_count(`id`#8L)], \
+  functions=[**partial_count**:warning:(`id`#8L)], \
   output=[`customer_id`#9L, `count`#19L])
 
-* **Exchange** \
+* **Exchange**:warning: \
   hashpartitioning(`customer_id`#9L, 200)
 
 * **HashAggregate** \
   (keys=[`customer_id`#9L], \
-  functions=[count(`id`#8L)], \
+  functions=[**count**:warning:(`id`#8L)], \
   output=[`customer_id`#9L, `order_count`#15L])
 
 ## With Bucketing
@@ -161,21 +161,23 @@ See `BucketingSpec` class
   Batched: true, Format: Parquet, \
   Location: InMemoryFileIndex[file:/C:/development/presentations/spark-perf/spark-warehouse/orders_bucket], \
   PartitionFilters: [], \
-  **PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])]**, \
+  PushedFilters: [In(`customer_id`, [1,2,3,4,5,6,7,8,9,10])], \
   ReadSchema: struct<`id`:bigint,`customer_id`:bigint>, \
-  **SelectedBucketsCount: 7 out of 10**
+  **SelectedBucketsCount: 7 out of 10**:warning:
 
 * **Filter** \
   `customer_id`#30L IN (1,2,3,4,5,6,7,8,9,10)
 
 * **HashAggregate** \
   (keys=[`customer_id`#30L], \
-  functions=[**partial_count**(`id`#29L)], \
+  functions=[**partial_count**:warning:(`id`#29L)], \
   output=[`customer_id`#30L, `count`#40L])
+
+* :warning:
 
 * **HashAggregate** \
   (keys=[`customer_id`#30L], \
-  functions=[**count**(`id`#29L)], \
+  functions=[**count**:warning:(`id`#29L)], \
   output=[`customer_id`#30L, `order_count`#36L])
 
 # Coalescing and Repartitioning
@@ -187,7 +189,7 @@ See `CoalesceRepartitionSpec` class
 * **Scan** \
   [obj#2]
 
-**Stage 0** (8 tasks)
+**Stage 0** (8 tasks :warning:)
 
 * **SerializeFromObject** \
   [assertnotnull(input[0, Order, true]).id AS `id`#3L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#4L]
@@ -203,7 +205,7 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#4L, 200)
 
-**Stage 1** (200 tasks)
+**Stage 1** (200 tasks :warning:)
 
 * **HashAggregate** \
   (keys=[`customer_id`#4L], \
@@ -218,7 +220,7 @@ See `CoalesceRepartitionSpec` class
 * **Scan** \
   [obj#18]
 
-**Stage 2** (8 tasks)
+**Stage 2** (8 tasks :warning:)
 
 * **SerializeFromObject** \
   [assertnotnull(input[0, Order, true]).id AS `id`#19L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#20L]
@@ -234,15 +236,15 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#20L, 200)
 
-**Stage 3** (20 tasks)
+**Stage 3** (20 tasks :warning:)
 
 * **HashAggregate** \
   (keys=[`customer_id`#20L], \
   functions=[count(1)], \
   output=[`customer_id`#20L, `order_count`#25L])
   
-* **Coalesce** \
-  20
+* **Coalesce**:warning: \
+  **20**:warning:
 
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
@@ -252,7 +254,7 @@ See `CoalesceRepartitionSpec` class
 * **Scan** \
   [obj#34]
 
-**Stage 4** (8 tasks)
+**Stage 4** (8 tasks :warning:)
 
 * **SerializeFromObject** \
   [assertnotnull(input[0, Order, true]).id AS `id`#35L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#36L]
@@ -268,7 +270,7 @@ See `CoalesceRepartitionSpec` class
 * **Exchange** \
   hashpartitioning(`customer_id`#36L, 200)
 
-**Stage 5** (200 tasks)
+**Stage 5** (200 tasks :warning:)
 
 * **HashAggregate** \
   (keys=[`customer_id`#36L], \
@@ -276,9 +278,9 @@ See `CoalesceRepartitionSpec` class
   output=[`customer_id`#36L, `order_count`#41L])
 
 * **Exchange** \
-  RoundRobinPartitioning(20)
+  **RoundRobinPartitioning(20)**:warning:
 
-**Stage 6** (20 tasks)
+**Stage 6** (20 tasks :warning:)
 
 * **Execute CreateDataSourceTableAsSelectCommand** \
   `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
