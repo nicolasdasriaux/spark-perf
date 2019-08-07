@@ -24,6 +24,8 @@ http://localhost:4040
 
 See `BroadcastHashJoinSpec` class
 
+**Details for Query 0** (or 1 or 2)
+
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
   
@@ -42,6 +44,8 @@ See `BroadcastHashJoinSpec` class
 # Shuffled Hash Join
 
 See `ShuffledHashJoinSpec` class
+
+**Details for Query 0**
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -64,6 +68,8 @@ See `ShuffledHashJoinSpec` class
 # Sort Merge Join
 
 See `SortMergeJoinSpec` class
+
+**Details for Query 0**
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -95,6 +101,8 @@ See `PartitioningSpec` class
 
 ## Without Partitioning
 
+**Details for Query 1**
+
 * **FileScan parquet** \
   `default.country_customers_no_partition` \
   [`id`#13L,`name`#14,`country`#15] \
@@ -111,6 +119,8 @@ See `PartitioningSpec` class
   [`id`#13L, `name`#14, `country`#15]
 
 ## With Partitioning
+
+**Details for Query 3**
 
 * **FileScan parquet** \
   default.country_customers_partition \
@@ -131,6 +141,8 @@ See `PartitioningSpec` class
 See `BucketingSpec` class
 
 ## Without bucketing
+
+**Details for Query 1**
 
 * **FileScan parquet** \
   `default.orders_no_bucket` \
@@ -158,6 +170,8 @@ See `BucketingSpec` class
   output=[`customer_id`#9L, `order_count`#15L])
 
 ## With Bucketing
+
+**Details for Query 3**
 
 * **FileScan parquet** \
   `default.orders_bucket` \
@@ -190,104 +204,117 @@ See `CoalesceRepartitionSpec` class
 
 ## Neither coalescing nor repartitioning
 
+**Details from Query 0**
+
 * **Scan** \
   [obj#2]
 
-**Stage 0** (8 tasks:warning:)
+* **Stage 0** \
+  (8 tasks):warning: in **Details from Job 0**
 
-* **SerializeFromObject** \
-  [assertnotnull(input[0, Order, true]).id AS `id`#3L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#4L]
+  * **SerializeFromObject** \
+    [assertnotnull(input[0, Order, true]).id AS `id`#3L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#4L]
+
+  * **Project** \
+    [`customer_id`#4L]
+
+  * **HashAggregate** \
+    (keys=[`customer_id`#4L], \
+    functions=[partial_count(1)], \
+    output=[`customer_id`#4L, `count`#15L])
+
+  * **Exchange** \
+    hashpartitioning(`customer_id`#4L, 200)
+
+* **Stage 1** \
+  (200 tasks):warning: in **Details from Job 0**
+
+  * **HashAggregate** \
+    (keys=[`customer_id`#4L], \
+    functions=[count(1)], \
+    output=[`customer_id`#4L, `order_count`#9L])
   
-* **Project** \
-  [`customer_id`#4L]
-
-* **HashAggregate** \
-  (keys=[`customer_id`#4L], \
-  functions=[partial_count(1)], \
-  output=[`customer_id`#4L, `count`#15L])
-  
-* **Exchange** \
-  hashpartitioning(`customer_id`#4L, 200)
-
-**Stage 1** (200 tasks:warning:)
-
-* **HashAggregate** \
-  (keys=[`customer_id`#4L], \
-  functions=[count(1)], \
-  output=[`customer_id`#4L, `order_count`#9L])
-  
-* **Execute CreateDataSourceTableAsSelectCommand** \
-  `order_counts`, Overwrite, [`customer_id`, `order_count`]
+  * **Execute CreateDataSourceTableAsSelectCommand** \
+    `order_counts`, Overwrite, [`customer_id`, `order_count`]
  
 ## Coalescing
+
+**Details from Query 1**
 
 * **Scan** \
   [obj#18]
 
-**Stage 2** (8 tasks:warning:)
+* **Stage 2** \
+  (8 tasks):warning: in **Details for Job 1**
 
-* **SerializeFromObject** \
-  [assertnotnull(input[0, Order, true]).id AS `id`#19L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#20L]
+  * **SerializeFromObject** \
+    [assertnotnull(input[0, Order, true]).id AS `id`#19L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#20L]
 
-* **Project** \
-  [`customer_id`#20L]
+  * **Project** \
+    [`customer_id`#20L]
 
-* **HashAggregate** \
-  (keys=[`customer_id`#20L],
-  functions=[partial_count(1)],
-  output=[`customer_id`#20L, `count`#31L])
+  * **HashAggregate** \
+    (keys=[`customer_id`#20L],
+    functions=[partial_count(1)],
+    output=[`customer_id`#20L, `count`#31L])
 
-* **Exchange** \
-  hashpartitioning(`customer_id`#20L, 200)
+  * **Exchange** \
+    hashpartitioning(`customer_id`#20L, 200)
 
-**Stage 3** (20 tasks:warning:)
+* **Stage 3** \
+  (20 tasks):warning: in **Details for Job 1**
 
-* **HashAggregate** \
-  (keys=[`customer_id`#20L], \
-  functions=[count(1)], \
-  output=[`customer_id`#20L, `order_count`#25L])
+  * **HashAggregate** \
+    (keys=[`customer_id`#20L], \
+    functions=[count(1)], \
+    output=[`customer_id`#20L, `order_count`#25L])
   
-* **Coalesce**:warning: \
-  _20_:warning:
+  * **Coalesce**:warning: \
+    _20_:warning:
 
-* **Execute CreateDataSourceTableAsSelectCommand** \
-  `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
+  * **Execute CreateDataSourceTableAsSelectCommand** \
+    `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
 
 ## Repartitioning
+
+**Details from Query 2**
 
 * **Scan** \
   [obj#34]
 
-**Stage 4** (8 tasks:warning:)
+* **Stage 4** \
+  (8 tasks):warning: in **Details for Job 2**
 
-* **SerializeFromObject** \
-  [assertnotnull(input[0, Order, true]).id AS `id`#35L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#36L]
+  * **SerializeFromObject** \
+    [assertnotnull(input[0, Order, true]).id AS `id`#35L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#36L]
 
-* **Project** \
-  [`customer_id`#36L]
+  * **Project** \
+    [`customer_id`#36L]
   
-* **HashAggregate** \
-  (keys=[`customer_id`#36L], \
-  functions=[partial_count(1)], \
-  output=[`customer_id`#36L, count#47L])
+  * **HashAggregate** \
+    (keys=[`customer_id`#36L], \
+    functions=[partial_count(1)], \
+    output=[`customer_id`#36L, count#47L])
 
-* **Exchange** \
-  hashpartitioning(`customer_id`#36L, 200)
+  * **Exchange** \
+    hashpartitioning(`customer_id`#36L, 200)
 
-**Stage 5** (200 tasks:warning:)
+* **Stage 5** \
+  (200 tasks):warning: in **Details for Job 2**
 
-* **HashAggregate** \
-  (keys=[`customer_id`#36L], \
-  functions=[count(1)], \
-  output=[`customer_id`#36L, `order_count`#41L])
+  * **HashAggregate** \
+    (keys=[`customer_id`#36L], \
+    functions=[count(1)], \
+    output=[`customer_id`#36L, `order_count`#41L])
 
-* **Exchange** \
-  _RoundRobinPartitioning(20)_:warning:
+  * **Exchange** \
+    _RoundRobinPartitioning(20)_:warning:
 
-**Stage 6** (20 tasks:warning:)
+* **Stage 6** \
+  (20 tasks):warning: in **Details for Job 2**
 
-* **Execute CreateDataSourceTableAsSelectCommand** \
-  `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
+  * **Execute CreateDataSourceTableAsSelectCommand** \
+    `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
 
 # Join Skew
 
