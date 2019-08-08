@@ -23,9 +23,15 @@ http://localhost:4040
 
 # Instructions
 
+## Estimating Size per Row
+
+* Go to `EstimatingSizePerRowSpec` class
+* Follow instructions
+
 ## Broadcast Hash Join
 
 * Go to `BroadcastHashJoinSpec` class
+* Follow instructions
 
 ## Shuffled Hash Join
 

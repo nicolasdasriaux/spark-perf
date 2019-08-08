@@ -19,7 +19,7 @@ class SortMergeJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
   "Sort Merge Join" should "be performed when conditions apply" in {
     /**
-      * Applicability of '''Sort Merge Join'''
+      * Understanding Applicability of '''Sort Merge Join'''
       *
       * [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.apply()]]
       *
