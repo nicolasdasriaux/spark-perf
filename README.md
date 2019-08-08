@@ -36,10 +36,12 @@ http://localhost:4040
 ## Shuffled Hash Join
 
 * Go to `ShuffledHashJoinSpec` class
+* Follow instructions
 
 ## Sort Merge Join
 
 * Go to `SortMergeJoinSpec` class
+* Follow instructions
 
 ## Partitioning
 
