@@ -45,7 +45,8 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * Understanding Physical Plan with `ShuffledHashJoin`
       *
       * (7) Observe plan for query in '''Spark UI'''
-      *     - Locate `ShuffledHashJoin`
+      *     - `ShuffledHashJoin` node
+      *     - `Exchange` nodes (shuffle)
       */
 
     /**

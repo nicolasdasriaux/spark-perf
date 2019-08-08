@@ -43,7 +43,8 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * Understanding Physical Plan with `BroadcastHashJoin`
       *
       * (7) Observe plan for query
-      *     - Locate `BroadcastHashJoin`
+      *     -`BroadcastHashJoin` node
+      *     -`BroadcastExchange` node (broadcast)
       */
 
     /**
