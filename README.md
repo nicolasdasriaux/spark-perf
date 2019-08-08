@@ -53,6 +53,10 @@ http://localhost:4040
 
 # Hints for Profiling with Spark UI
 
+Hints will help you navigating and finding information in Spark UI.
+
+**Warning icons** :warning: signal elements that are important to see.
+
 ## Broadcast Hash Join
 
 **Details for Query 0** (or 1 or 2)

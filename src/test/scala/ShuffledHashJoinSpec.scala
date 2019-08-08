@@ -2,19 +2,25 @@ import org.apache.spark.sql.SparkSession
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 /**
-  * Estimating Size per Row
+  * Shuffled Hash Join
   *
-  * [[org.apache.spark.sql.catalyst.plans.logical.statsEstimation.EstimationUtils.getSizePerRow()]]
-  * [[org.apache.spark.sql.types.DataType.defaultSize]]
-  * [[org.apache.spark.sql.types.LongType.defaultSize]]
-  * [[org.apache.spark.sql.types.StringType.defaultSize]]
-  */
-
-/**
-  * Estimated Size per Row (bytes)
+  * (1) Read '''Shuffled Hash Join''' section of the following page
+  *     [[https://medium.com/@achilleus/https-medium-com-joins-in-apache-spark-part-3-1d40c1e51e1c Joins in Apache Spark, Part 3]]
+  *
+  * (2) Optionally read the following page
+  *     [[https://www.waitingforcode.com/apache-spark-sql/shuffle-join-spark-sql/read Shuffle join in Spark SQL]]
+  *
+  * (3) Run the test class
+  *     Eventually it will block at [[ShuffledHashJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *
+  * (4) Open Spark UI in browser [[http://localhost:4040]]
+  *
+  * (5) Remember estimated Size per Row (bytes)
   *
   * Customer: 36 = 8 + 8 (LongType) + 20 (StringType)
   * Order: 24 = 8 + 8 (LongType) + 8 (LongType)
+  *
+  * (6) Follow instructions for each of the test cases
   */
 
 class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
@@ -36,11 +42,17 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
 
   "Shuffled Hash Join" should "be performed when conditions apply" in {
     /**
-      * Applicability of '''Shuffled Hash Join'''
+      * Understanding Physical Plan with `ShuffledHashJoin`
       *
-      * [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.apply()]]
+      * (7) Observe plan for query in '''Spark UI'''
+      *     - Locate `ShuffledHashJoin`
+      */
+
+    /**
+      * Understanding Applicability of '''Shuffled Hash Join'''
       *
-      * (1) Look for cases that output `ShuffledHashJoinExec`
+      * (8) Look for cases that output `ShuffledHashJoinExec`
+      *     [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.apply()]]
       *
       * {{{
       * !conf.preferSortMergeJoin &&
@@ -60,11 +72,11 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * !RowOrdering.isOrderable(leftKeys)
       * }}}
       *
-      * (2) Look at `canBuildLocalHashMap` method
+      * (9) Look at `canBuildLocalHashMap` method
+      *     [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.canBuildLocalHashMap]]
       *
       * Matches a plan whose single partition should be small enough to build a hash table.
       * In other words, it's most worthwhile to hash and shuffle data than to broadcast it to all executors.
-      * [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.canBuildLocalHashMap]]
       *
       * {{{
       * def canBuildLocalHashMap(plan: LogicalPlan): Boolean = {
@@ -72,10 +84,10 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * }
       * }}}
       *
-      * (3) Look at `muchSmaller` method
+      * (10) Look at `muchSmaller` method
+      *      [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.muchSmaller]]
       *
-      * Returns whether plan a is much smaller (3 x) than plan b.
-      * [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.muchSmaller]]
+      * Returns whether plan a is much smaller (3 times at least) than plan b.
       *
       * {{{
       * def muchSmaller(a: LogicalPlan, b: LogicalPlan): Boolean = {
@@ -83,38 +95,80 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * }
       * }}}
       *
-      * (4) Look at `spark.sql.join.preferSortMergeJoin` config
+      * (11) Look at `spark.sql.join.preferSortMergeJoin` config
+      *      [[org.apache.spark.sql.internal.SQLConf.PREFER_SORTMERGEJOIN]]
+      *      [[org.apache.spark.sql.internal.SQLConf.preferSortMergeJoin]]
       *
       * When true, prefer sort merge join over shuffle hash join.
-      * [[org.apache.spark.sql.internal.SQLConf.preferSortMergeJoin]]
-      * [[org.apache.spark.sql.internal.SQLConf.PREFER_SORTMERGEJOIN]]
       *
-      * (5) Look at `spark.sql.autoBroadcastJoinThreshold` config
+      * (12) Look at `spark.sql.autoBroadcastJoinThreshold` config
+      *      [[org.apache.spark.sql.internal.SQLConf.AUTO_BROADCASTJOIN_THRESHOLD]]
+      *      [[org.apache.spark.sql.internal.SQLConf.autoBroadcastJoinThreshold]]
       *
       * Configures the maximum size in bytes for a table that will be broadcast to all worker
       * nodes when performing a join. By setting this value to -1 broadcasting can be disabled.
-      * [[org.apache.spark.sql.internal.SQLConf.autoBroadcastJoinThreshold]]
-      * [[org.apache.spark.sql.internal.SQLConf.AUTO_BROADCASTJOIN_THRESHOLD]]
       *
-      * (6) Look at `spark.sql.shuffle.partitions` method
+      * (13) Look at `spark.sql.shuffle.partitions` method
+      *      [[org.apache.spark.sql.internal.SQLConf.numShufflePartitions]]
+      *      [[org.apache.spark.sql.internal.SQLConf.SHUFFLE_PARTITIONS]]
       *
       * The default number of partitions to use when shuffling data for joins or aggregations.
-      * [[org.apache.spark.sql.internal.SQLConf.numShufflePartitions]]
-      * [[org.apache.spark.sql.internal.SQLConf.SHUFFLE_PARTITIONS]]
       */
 
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
 
+
+    val customersDS = ECommerce.customersWithKnownRowCountDS(4) //
+    val ordersDS = ECommerce.ordersWithKnownRowCountDS(4, customerId => 100)
+
+    val customersAndOrdersDF = customersDS.as("cst")
+      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
+      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
+
     /**
-      * Rows
+      * Applicability of Shuffled Hash Join
+      *
+      * {{{
+      * !conf.preferSortMergeJoin
+      * }}}
+      *
+      * ??? (true / false)
+      *
+      * {{{
+      * def canBuildLocalHashMap(plan: LogicalPlan): Boolean = {
+      *   plan.stats.sizeInBytes < conf.autoBroadcastJoinThreshold * conf.numShufflePartitions
+      * }
+      * }}}
+      *
+      * With `plan` as `customersDS`
+      * ??? (true / false)
+      *
+      * {{{
+      * def muchSmaller(a: LogicalPlan, b: LogicalPlan): Boolean = {
+      *   a.stats.sizeInBytes * 3 <= b.stats.sizeInBytes
+      * }
+      * }}}
+      *
+      * With `a` as `customerDS`, `b` as `ordersDS`
+      * ??? (true / false)
+      *
+      * ??? (YES / NO)
+      */
+
+    customersAndOrdersDF.collect()
+    customersAndOrdersDF.queryExecution.toString().contains("ShuffledHashJoin") should be(true)
+
+    /**
+      * HINT
+      */
+
+    /**
+      * Row Count (rows)
       *
       * Customer: 4
       * Order: 400 = 4 * 100
       */
-
-    val customersDS = ECommerce.customersWithKnownRowCountDS(4) //
-    val ordersDS = ECommerce.ordersWithKnownRowCountDS(4, customerId => 100)
 
     /**
       * Estimated Size for All Rows (bytes)
@@ -122,10 +176,6 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * Customer: 144 = 36 * 4
       * Order: 9600 = 24 * 400
       */
-
-    val customersAndOrdersDF = customersDS.as("cst")
-      .join(ordersDS.as("ord"), $"cst.id" === $"ord.customer_id")
-      .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
 
     /**
       * Applicability of Shuffled Hash Join
@@ -142,7 +192,7 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * }
       * }}}
       *
-      * With plan = Customer
+      * With `plan` as `customersDS`
       * 144 < 2 * 100
       *
       * {{{
@@ -151,13 +201,10 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
       * }
       * }}}
       *
-      * With a = Customer, b = Order
+      * With `a` as `customersDS`, `b` as `orderDS`
       * 144 * 3 <= 9600
       *
       * YES, it applies.
       */
-
-    customersAndOrdersDF.collect()
-    customersAndOrdersDF.queryExecution.toString().contains("ShuffledHashJoin") should be(true)
   }
 }
