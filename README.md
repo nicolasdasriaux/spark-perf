@@ -218,9 +218,9 @@ Hints will help you navigating and finding information in Spark UI.
 
 ### With Bucketing
 
-![With Bucketing Plan](with-bucketing-plan.png)
-
 **Details for Query 3**
+
+![With Bucketing Plan](with-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_bucket` \
