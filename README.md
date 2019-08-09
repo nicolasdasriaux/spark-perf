@@ -189,6 +189,8 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
+![Without bucketing](without-bucketing-plan.png)
+
 * **FileScan parquet** \
   `default.orders_no_bucket` \
   [`id`#8L,`customer_id`#9L] \
@@ -215,6 +217,8 @@ Hints will help you navigating and finding information in Spark UI.
   output=[`customer_id`#9L, `order_count`#15L])
 
 ### With Bucketing
+
+![With bucketing](with-bucketing-plan.png)
 
 **Details for Query 3**
 
