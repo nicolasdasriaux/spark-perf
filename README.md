@@ -289,7 +289,7 @@ Hints will help you navigating and finding information in Spark UI.
     output=[`customer_id`#4L, `order_count`#9L])
 
   * **Execute CreateDataSourceTableAsSelectCommand** \
-    `or
+    `order_counts`, Overwrite, [`customer_id`, `order_count`]
 
 **Details for Job 0**
 
