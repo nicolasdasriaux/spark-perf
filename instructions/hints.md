@@ -8,7 +8,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0** (or 1 or 2)
 
-![Broadcast Hash Join Plan](broadcast-hash-join-plan.png)
+![Broadcast Hash Join Plan](images/broadcast-hash-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -29,7 +29,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Shuffled Hash Join Plan](shuffled-hash-join-plan.png)
+![Shuffled Hash Join Plan](images/shuffled-hash-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -53,7 +53,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Sort Merge Join Plan](sort-merge-join-plan.png)
+![Sort Merge Join Plan](images/sort-merge-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -85,7 +85,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without Partitioning Plan](without-partitioning-plan.png)
+![Without Partitioning Plan](images/without-partitioning-plan.png)
 
 * **FileScan parquet** \
   `default.country_customers_no_partition` \
@@ -106,7 +106,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 3**
 
-![With Partitioning Plan](with-partitioning-plan.png)
+![With Partitioning Plan](images/with-partitioning-plan.png)
 
 * **FileScan parquet** \
   default.country_customers_partition \
@@ -128,7 +128,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without bucketing Plan](without-bucketing-plan.png)
+![Without bucketing Plan](images/without-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_no_bucket` \
@@ -159,7 +159,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 3**
 
-![With Bucketing Plan](with-bucketing-plan.png)
+![With Bucketing Plan](images/with-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_bucket` \
@@ -192,7 +192,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Neither Coalescing nor Repartitioning Plan](neither-coalescing-nor-repartitioning-plan.png)
+![Neither Coalescing nor Repartitioning Plan](images/neither-coalescing-nor-repartitioning-plan.png)
 
 * **Scan** \
   [obj#2]
@@ -227,13 +227,13 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 0**
 
-![Neither Coalescing nor Repartitioning Stages](neither-coalescing-nor-repartitioning-stages.png)
+![Neither Coalescing nor Repartitioning Stages](images/neither-coalescing-nor-repartitioning-stages.png)
 
 ### Coalescing
 
 **Details for Query 1**
 
-![Coalescing Plan](coalescing-plan.png)
+![Coalescing Plan](images/coalescing-plan.png)
 
 * **Scan** \
   [obj#18]
@@ -271,13 +271,13 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 1**
 
-![Coalescing Stages](coalescing-stages.png)
+![Coalescing Stages](images/coalescing-stages.png)
 
 ### Repartitioning
 
 **Details for Query 2**
 
-![Repartitioning Plan](repartitioning-plan.png)
+![Repartitioning Plan](images/repartitioning-plan.png)
 
 * **Scan** \
   [obj#34]
@@ -318,7 +318,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 2**
 
-![Repartitioning Stage](repartitioning-stages.png)
+![Repartitioning Stage](images/repartitioning-stages.png)
 
 ## Join Skew
 
@@ -337,11 +337,11 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Event Timeline** diagram
 
-  ![Skew Event Timeline](skew-event-timeline.png)
+  ![Skew Event Timeline](images/skew-event-timeline.png)
 
 * **Summary Metrics for 200 Completed Tasks** table
 
-  ![Skew Summary Metrics](skew-summary-metrics.png)
+  ![Skew Summary Metrics](images/skew-summary-metrics.png)
 
 * **Tasks** table
 
@@ -360,10 +360,10 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Event Timeline** diagram
 
-  ![Salting Event Timeline](salting-event-timeline.png)
+  ![Salting Event Timeline](images/salting-event-timeline.png)
 
 * **Summary Metrics for 200 Completed Tasks** table
 
-  ![Salting Summary Metrics](salting-summary-metrics.png)
+  ![Salting Summary Metrics](images/salting-summary-metrics.png)
 
 * **Tasks** table
