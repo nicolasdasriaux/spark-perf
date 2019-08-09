@@ -34,7 +34,7 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       *
       * (4) Observe plan for query
       *     - Presence of `Scan` fully reading the table
-      *     - Presence of `Filter` node
+      *     - Presence of `Exchange`
       */
 
     implicit val spark: SparkSession = sparkSession

@@ -1,6 +1,17 @@
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
+/**
+  * Bucketing
+  *
+  * (1) Run the test class.
+  *     Eventually it will block at [[BucketingSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *
+  * (2) Open Spark UI in browser [[http://localhost:4040]]
+  *
+  * (3) Follow instructions for each of the test cases
+  */
+
 class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Bucketing")
@@ -17,6 +28,16 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   "Absence of Bucketing" should "not allow to avoid shuffling" in {
+    /**
+      * Observing Physical Plan when absence of bucketing
+      *
+      * (4) Observe plan for query
+      *     - Presence of `Scan` fully reading the table
+      *     - Presence of `Exchange` node (shuffling) between 2 `HashAggregate` nodes
+      *     - `partial_count` for the 1st `HashAggregate` node
+      *     - `count` for the 2nd `HashAggregate` node
+      */
+
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
     import org.apache.spark.sql.functions._
@@ -37,6 +58,17 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   "Bucketing" should "allow to avoid shuffling and to target buckets" in {
+    /**
+      * Observing Physical Plan when presence of bucketing
+      *
+      * (5) Observe plan for query
+      *     - Presence of `Scan` reading only potential buckets
+      *     - Presence of `Filter` node to select from potential rows
+      *     - Absence of `Exchange` node (shuffling) (useless thanks to bucket '''pre-hash''')
+      *     - `partial_count` for the 1st `HashAggregate` node
+      *     - `count` for the 2nd `HashAggregate` node
+      */
+
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
     import org.apache.spark.sql.functions._
