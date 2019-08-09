@@ -368,7 +368,7 @@ Hints will help you navigating and finding information in Spark UI.
     functions=[count(1)], \
     output=[`customer_id`#36L, `order_count`#41L])
 
-  * **Exchange** \
+  * **Exchange**:warning: \
     _RoundRobinPartitioning(20)_:warning:
 
 * **Stage 6** \
