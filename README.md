@@ -253,6 +253,8 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details from Query 0**
 
+![Neither Coalescing nor Repartitioning Plan](neither-coalescing-nor-repartitioning-plan.png)
+
 * **Scan** \
   [obj#2]
 
@@ -285,6 +287,8 @@ Hints will help you navigating and finding information in Spark UI.
     `order_counts`, Overwrite, [`customer_id`, `order_count`]
 
 ### Coalescing
+
+![Coalescing Plan](coalescing-plan.png)
 
 **Details from Query 1**
 
@@ -323,6 +327,8 @@ Hints will help you navigating and finding information in Spark UI.
     `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
 
 ### Repartitioning
+
+![Repartitioning Plan](repartitionig-plan.png)
 
 **Details from Query 2**
 
