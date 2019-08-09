@@ -68,7 +68,7 @@ http://localhost:4040
 
 Hints will help you navigating and finding information in Spark UI.
 
-**Warning icons** :warning: signal elements that are important to see.
+**Warning icons** :warning: signal elements that are important to be aware of.
 
 ## Hints for Broadcast Hash Join
 
