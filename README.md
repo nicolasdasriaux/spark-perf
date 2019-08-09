@@ -56,7 +56,7 @@ http://localhost:4040
 
 ## Coalescing and Repartitioning
 
-* Go to `CoalesceRepartitionSpec` class
+* Go to `CoalescingRepartitioningSpec` class
 * Follow instructions ([hints for Spark UI](#hints-for-coalescing-and-repartitioning))
 
 ## Join Skew

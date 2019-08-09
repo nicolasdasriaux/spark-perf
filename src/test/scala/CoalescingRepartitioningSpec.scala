@@ -1,9 +1,9 @@
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
-class CoalesceRepartitionSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
+class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
-    .appName("Coalesce Repartition")
+    .appName("Coalescing Repartitioning")
     .master("local[*]")
     .config("spark.default.parallelism", 8) // Default parallelism in Spark
     .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
