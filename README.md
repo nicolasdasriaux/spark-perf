@@ -251,7 +251,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 ### Neither coalescing nor repartitioning
 
-**Details from Query 0**
+**Details for Query 0**
 
 ![Neither Coalescing nor Repartitioning Plan](neither-coalescing-nor-repartitioning-plan.png)
 
@@ -259,7 +259,7 @@ Hints will help you navigating and finding information in Spark UI.
   [obj#2]
 
 * **Stage 0** \
-  (8 tasks):warning: in **Details from Job 0**
+  (8 tasks):warning: in **Details for Job 0**
 
   * **SerializeFromObject** \
     [assertnotnull(input[0, Order, true]).id AS `id`#3L, assertnotnull(input[0, Order, true]).customer_id AS `customer_id`#4L]
@@ -276,7 +276,7 @@ Hints will help you navigating and finding information in Spark UI.
     hashpartitioning(`customer_id`#4L, 200)
 
 * **Stage 1** \
-  (200 tasks):warning: in **Details from Job 0**
+  (200 tasks):warning: in **Details for Job 0**
 
   * **HashAggregate** \
     (keys=[`customer_id`#4L], \
@@ -284,13 +284,17 @@ Hints will help you navigating and finding information in Spark UI.
     output=[`customer_id`#4L, `order_count`#9L])
 
   * **Execute CreateDataSourceTableAsSelectCommand** \
-    `order_counts`, Overwrite, [`customer_id`, `order_count`]
+    `or
+
+**Details for Job 0**
+
+![Neither Coalescing nor Repartitioning Stages](neither-coalescing-nor-repartitioning-stages.png)
 
 ### Coalescing
 
-![Coalescing Plan](coalescing-plan.png)
+**Details for Query 1**
 
-**Details from Query 1**
+![Coalescing Plan](coalescing-plan.png)
 
 * **Scan** \
   [obj#18]
@@ -326,11 +330,15 @@ Hints will help you navigating and finding information in Spark UI.
   * **Execute CreateDataSourceTableAsSelectCommand** \
     `order_counts_coalesce`, Overwrite, [`customer_id`, `order_count`]
 
+**Details for Job 1**
+
+![Coalescing Stages](coalescing-stages.png)
+
 ### Repartitioning
 
-![Repartitioning Plan](repartitionig-plan.png)
+**Details for Query 2**
 
-**Details from Query 2**
+![Repartitioning Plan](repartitioning-plan.png)
 
 * **Scan** \
   [obj#34]
@@ -368,6 +376,10 @@ Hints will help you navigating and finding information in Spark UI.
 
   * **Execute CreateDataSourceTableAsSelectCommand** \
     `order_counts_repartition`, Overwrite, [`customer_id`, `order_count`]
+
+**Details for Job 2**
+
+![Repartitioning Stage](repartitioning-stages.png)
 
 ## Join Skew
 
