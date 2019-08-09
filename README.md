@@ -163,11 +163,11 @@ Hints will help you navigating and finding information in Spark UI.
 * **Project** \
   [`id`#13L, `name`#14, `country`#15]
 
-### With Part
-
-![With Partitioning Plan](with-partitioning-plan.png)
+### With Partitioning
 
 **Details for Query 3**
+
+![With Partitioning Plan](with-partitioning-plan.png)
 
 * **FileScan parquet** \
   default.country_customers_partition \
@@ -189,7 +189,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without bucketing](without-bucketing-plan.png)
+![Without bucketing Plan](without-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_no_bucket` \
@@ -218,7 +218,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 ### With Bucketing
 
-![With bucketing](with-bucketing-plan.png)
+![With Bucketing Plan](with-bucketing-plan.png)
 
 **Details for Query 3**
 
