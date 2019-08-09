@@ -114,7 +114,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![[Sort Merge Join Plan]](sort-merge-join-plan.png)
+![Sort Merge Join Plan](sort-merge-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -146,6 +146,8 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
+![Without Partitioning Plan](without-partitioning-plan.png)
+
 * **FileScan parquet** \
   `default.country_customers_no_partition` \
   [`id`#13L,`name`#14,`country`#15] \
@@ -161,7 +163,9 @@ Hints will help you navigating and finding information in Spark UI.
 * **Project** \
   [`id`#13L, `name`#14, `country`#15]
 
-### With Partitioning
+### With Part
+
+![With Partitioning Plan](with-partitioning-plan.png)
 
 **Details for Query 3**
 
