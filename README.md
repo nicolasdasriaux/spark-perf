@@ -1,22 +1,7 @@
-# Setup
+# Spark Performance
 
-https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe
+Learning about some aspects of Spark performance and how to profile performance and diagnose possible optimisation
 
-
-C:\development\programs\hadoop-2.7.1\bin
-
-
-```
-HADOOP_HOME=C:\development\programs\hadoop-2.7.1
-```
-
-```
-winutils chmod -R 777 C:\tmp\hive
-```
-
-Schema auto-scan
-JSON Line
-CSV with CR
-JDBC
-
-http://localhost:4040
+* [Setup](setup.md)
+* [Instructions](instructions.md)
+* [Hints for Profiling with Spark UI](hints.md)
