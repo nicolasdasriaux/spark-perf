@@ -62,7 +62,7 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       * Observing Physical Plan when presence of bucketing
       *
       * (5) Observe plan for query
-      *     - Presence of `Scan` reading only potential buckets
+      *     - Presence of `Scan` node reading only potential buckets
       *     - Presence of `Filter` node to select from potential rows
       *     - Absence of `Exchange` node (shuffling) (useless thanks to bucket '''pre-hash''')
       *     - `partial_count` for the 1st `HashAggregate` node
