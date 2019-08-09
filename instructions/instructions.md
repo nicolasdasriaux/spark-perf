@@ -25,7 +25,6 @@
 * Go to `PartitioningSpec` class
 * Follow instructions ([hints for Spark UI](hints.md#partitioning))
 
-
 ## Bucketing
 
 * Go to `BucketingSpec` class

@@ -40,7 +40,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
 
   "Broadcast Hash Join" should "be performed when size conditions apply" in {
     /**
-      * Understanding Physical Plan with `BroadcastHashJoin`
+      * Observing Physical Plan with `BroadcastHashJoin`
       *
       * (7) Observe plan for query
       *     -`BroadcastHashJoin` node

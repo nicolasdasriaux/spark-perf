@@ -42,7 +42,7 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
 
   "Shuffled Hash Join" should "be performed when conditions apply" in {
     /**
-      * Understanding Physical Plan with `ShuffledHashJoin`
+      * Observing Physical Plan with `ShuffledHashJoin`
       *
       * (7) Observe plan for query in '''Spark UI'''
       *     - `ShuffledHashJoin` node
