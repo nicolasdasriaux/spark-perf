@@ -69,6 +69,8 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0** (or 1 or 2)
 
+![Broadcast Hash Join Plan](broadcast-hash-join-plan.png)
+
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
 
@@ -87,6 +89,8 @@ Hints will help you navigating and finding information in Spark UI.
 ## Shuffled Hash Join
 
 **Details for Query 0**
+
+![Shuffled Hash Join Plan](shuffled-hash-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -109,6 +113,8 @@ Hints will help you navigating and finding information in Spark UI.
 ## Sort Merge Join
 
 **Details for Query 0**
+
+![[Sort Merge Join Plan]](sort-merge-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
