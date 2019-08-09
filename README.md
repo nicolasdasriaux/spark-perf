@@ -31,33 +31,38 @@ http://localhost:4040
 ## Broadcast Hash Join
 
 * Go to `BroadcastHashJoinSpec` class
-* Follow instructions
+* Follow instructions ([hints for Spark UI](#hints-for-broadcast-hash-join))
 
 ## Shuffled Hash Join
 
 * Go to `ShuffledHashJoinSpec` class
-* Follow instructions
+* Follow instructions ([hints for Spark UI](#hints-for-shuffled-hash-join))
 
 ## Sort Merge Join
 
 * Go to `SortMergeJoinSpec` class
-* Follow instructions
+* Follow instructions ([hints for Spark UI](#hints-for-sort-merge-join))
 
 ## Partitioning
 
 * Go to `PartitioningSpec` class
+* Follow instructions ([hints for Spark UI](#hints-for-partitioning))
+
 
 ## Bucketing
 
 * Go to `BucketingSpec` class
+* Follow instructions ([hints for Spark UI](#hints-for-bucketing))
 
 ## Coalescing and Repartitioning
 
 * Go to `CoalesceRepartitionSpec` class
+* Follow instructions ([hints for Spark UI](#hints-for-coalescing-and-repartitioning))
 
 ## Join Skew
 
 * Go to `JoinSkewSpec` class
+* Follow instructions ([hints for Spark UI](#hints-for-join-skew))
 
 # Hints for Profiling with Spark UI
 
@@ -65,7 +70,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Warning icons** :warning: signal elements that are important to see.
 
-## Broadcast Hash Join
+## Hints for Broadcast Hash Join
 
 **Details for Query 0** (or 1 or 2)
 
@@ -86,7 +91,7 @@ Hints will help you navigating and finding information in Spark UI.
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-## Shuffled Hash Join
+## Hints for Shuffled Hash Join
 
 **Details for Query 0**
 
@@ -110,7 +115,7 @@ Hints will help you navigating and finding information in Spark UI.
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-## Sort Merge Join
+## Hints for Sort Merge Join
 
 **Details for Query 0**
 
@@ -140,7 +145,7 @@ Hints will help you navigating and finding information in Spark UI.
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
 
-## Partitioning
+## Hints for Partitioning
 
 ### Without Partitioning
 
@@ -183,7 +188,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 * :warning:
 
-## Bucketing
+## Hints for Bucketing
 
 ### Without bucketing
 
@@ -247,7 +252,7 @@ Hints will help you navigating and finding information in Spark UI.
   functions=[_count_:warning:(`id`#29L)], \
   output=[`customer_id`#30L, `order_count`#36L])
 
-## Coalescing and Repartitioning
+## Hints for Coalescing and Repartitioning
 
 ### Neither coalescing nor repartitioning
 
@@ -381,7 +386,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 ![Repartitioning Stage](repartitioning-stages.png)
 
-## Join Skew
+## Hints for Join Skew
 
 ### Observing skew
 
