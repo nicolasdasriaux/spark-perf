@@ -60,9 +60,22 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
   "Partitioning" should "allow to avoid filtering" in {
     /**
+      * Observing Storage Structure of partitioned table
+      *
+      * (5) Study the code below that does '''Partitioned Table Creation'''
+      *
+      * (6) Observe structure of saved `country_customers_partition` table
+      *     - Look at `spark-warehouse/country_customers_partition` folder
+      *     - Observe sub-directories such as `country=France` containing rows for a partition
+      *
+      *     - Observe `part-PPPPP-xxxxxxxxxxxxxxxx.xxxx.snappy.parquet` files inside those sub-directories
+      *       - PPPPP is part number
+      */
+
+    /**
       * Observing Physical Plan when presence of partitioning
       *
-      * (5) Observe plan for query
+      * (7) Observe plan for query
       *     - Early '''partition pruning''' directly in the `Scan` node
       *     - Absence of `Filter` node
       */
@@ -77,9 +90,10 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val countryCustomersDF = ECommerce.customersDS(1000000)
       .withColumn("country", country(($"id" % 4 + 1).cast(IntegerType)))
 
+    // Partitioned Table Creation
     countryCustomersDF.write
       .mode(SaveMode.Overwrite)
-      .partitionBy("country") // Partitioning by country
+      .partitionBy("country")
       .saveAsTable("country_customers_partition")
 
     val franceCustomersDF = spark.table("country_customers_partition")
