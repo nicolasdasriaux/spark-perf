@@ -51,6 +51,7 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
       *     - Be aware there could have been as many file as tasks in Stage 1 (200)
       *     - Be aware there are many small files and it might be suboptimal
       */
+
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
     import org.apache.spark.sql.functions._
@@ -88,6 +89,7 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
       *     - Be aware there could have been as many files as tasks in Stage 3 (20)
       *     - Be aware there are now less but bigger parts, at the cost of less parallelism (but no shuffling)
       */
+
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
     import org.apache.spark.sql.functions._
