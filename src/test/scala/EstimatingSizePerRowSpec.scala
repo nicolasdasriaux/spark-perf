@@ -2,7 +2,9 @@ import org.apache.spark.sql.SparkSession
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 /**
-  * Catalyst needs to estimate Size per Row to optimize queries using Dataframe and datasets.
+  * Estimating Size per Row
+  *
+  * Catalyst needs to estimate Size per Row to optimize queries using dataframes and datasets.
   */
 
 /**
