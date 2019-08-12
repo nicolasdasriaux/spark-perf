@@ -4,7 +4,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 /**
   * Estimating Size per Row
   *
-  * Catalyst needs to estimate Size per Row to optimize queries using dataframes and datasets.
+  * Catalyst optimizer needs to estimate Size per Row to optimize queries using dataframes and datasets.
   */
 
 /**

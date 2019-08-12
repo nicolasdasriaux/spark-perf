@@ -2,6 +2,20 @@ import org.apache.spark.sql.types.IntegerType
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
+/**
+  * Join Skew (and data skew in general)
+  *
+  * (1) Read the following page
+  *     [[https://dzone.com/articles/why-your-spark-apps-are-slow-or-failing-part-ii-da Why Your Spark Apps Are Slow Or Failing, Part II: Data Skew and Garbage Collection]]
+  *
+  * (2) Run the test class.
+  *     Eventually it will block at [[JoinSkewSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *
+  * (3) Open Spark UI in browser [[http://localhost:4040]]
+  *
+  * (4) Follow instructions for each of the test cases
+  */
+
 class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Join Skew")
@@ -20,6 +34,16 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   "Join Skew" should "be observable when unbalanced join" in {
+    /**
+      * (5) Notice how orders are highly unbalanced over customers
+      *     Customer #0 has 1,000,000 orders while customers #2 to #9 have only 5 orders
+      *
+      * (6) View timeline of join stage
+      *     - Identify Job and stage containing `SortMergeJoin`
+      *     - View details of stage
+      *     - Using Event Timeline, notice how one of the tasks takes much longer than any other
+      *     - Find other evidences using Summary Metrics table and also Tasks table (size, number of records)
+      */
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
 
@@ -36,6 +60,16 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   it should "be fixable with salting" in {
+    /**
+      * (7) Study the code below that does salting
+      * (8) Study the code below that does a salted join
+      *
+      * (9) View timeline of join stage
+      *     - Identify Job and stage containing `SortMergeJoin`
+      *     - View details of stage
+      *     - Using Event Timeline, notice how tasks are now much more balanced
+      *     - Find other evidences of this improvement
+      */
     implicit val spark: SparkSession = sparkSession
     import org.apache.spark.sql.functions._
     import spark.implicits._
@@ -43,10 +77,12 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val customersDS = ECommerce.customersDS(10)
     val ordersDS = ECommerce.ordersDS(10, customerId => if (customerId == 1) 1000000 else 5)
 
+    // Salting
     val saltCount = 100
     val saltedCustomersDF = customersDS.withColumn("salt", explode(lit((0 until saltCount).toArray)))
     val saltedOrdersDF = ordersDS.withColumn("salt", round(rand * (saltCount - 1)).cast(IntegerType))
 
+    // Salted Join
     val customersAndOrdersDF = saltedCustomersDF.as("cst")
       .join(saltedOrdersDF.as("ord"), $"cst.id" === $"ord.customer_id" && $"cst.salt" === $"ord.salt")
       .select($"cst.id".as("customer_id"), $"cst.name", $"ord.id".as("order_id"))
