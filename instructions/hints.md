@@ -4,6 +4,14 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Warning icons** :warning: signal elements that are important to be aware of.
 
+* [Broadcast Hash Join](#broadcast-hash-join)
+* [Shuffled Hash Join](#shuffled-hash-join)
+* [Sort Merge Join](#sort-merge-join)
+* [Partitioning](#partitioning)
+* [Bucketing](#bucketing)
+* [Coalescing and Repartitioning](#coalescing-and-repartitioning)
+* [Join Skew](#join-skew)
+
 ## Broadcast Hash Join
 
 **Details for Query 0** (or 1 or 2)
