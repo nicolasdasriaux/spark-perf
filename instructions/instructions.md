@@ -1,5 +1,20 @@
 # Instructions
 
+## Partitioning
+
+* Go to `PartitioningSpec` class
+* Follow instructions ([hints for Spark UI](hints.md#partitioning))
+
+## Bucketing
+
+* Go to `BucketingSpec` class
+* Follow instructions ([hints for Spark UI](hints.md#bucketing))
+
+## Coalescing and Repartitioning
+
+* Go to `CoalescingRepartitioningSpec` class
+* Follow instructions ([hints for Spark UI](hints.md#coalescing-and-repartitioning))
+
 ## Estimating Size per Row
 
 * Go to `EstimatingSizePerRowSpec` class
@@ -19,21 +34,6 @@
 
 * Go to `SortMergeJoinSpec` class
 * Follow instructions ([hints for Spark UI](hints.md#sort-merge-join))
-
-## Partitioning
-
-* Go to `PartitioningSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#partitioning))
-
-## Bucketing
-
-* Go to `BucketingSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#bucketing))
-
-## Coalescing and Repartitioning
-
-* Go to `CoalescingRepartitioningSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#coalescing-and-repartitioning))
 
 ## Join Skew
 
