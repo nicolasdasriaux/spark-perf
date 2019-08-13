@@ -8,10 +8,10 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   *     [[https://medium.com/@achilleus/https-medium-com-joins-in-apache-spark-part-3-1d40c1e51e1c Joins in Apache Spark, Part 3]]
   *
   * (2) Optionally read the following page
-  *     [[https://www.waitingforcode.com/apache-spark-sql/sort-merge-join-spark-sql/read join in Spark SQL]]
+  *     [[https://www.waitingforcode.com/apache-spark-sql/sort-merge-join-spark-sql/read Sort-merge join in Spark SQL]]
   *
   * (3) Run the test class.
-  *     Eventually it will block at [[SortMergeJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[SortMergeJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (4) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -43,10 +43,10 @@ class SortMergeJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan with `BroadcastHashJoin`
       *
-      * (7) Observe plan for query
-      *     - `SortMergeJoin` node
-      *     - `Sort` nodes
-      *     - `Exchange` nodes (shuffle)
+      * (7) Observe plan for query in '''Spark UI'''
+      *     - Notice `SortMergeJoin` node
+      *     - Notice `Sort` nodes
+      *     - Notice `Exchange` nodes (shuffle)
       */
 
     /**

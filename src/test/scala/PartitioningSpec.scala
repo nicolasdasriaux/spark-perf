@@ -6,7 +6,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   * Partitioning
   *
   * (1) Run the test class.
-  *     Eventually it will block at [[PartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[PartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (2) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -32,7 +32,7 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when absence of partitioning
       *
-      * (4) Observe plan for query
+      * (4) Observe plan for query in '''Spark UI'''
       *     - Presence of `Scan` fully reading the table
       *     - Presence of `Exchange`
       */
@@ -75,9 +75,9 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when presence of partitioning
       *
-      * (7) Observe plan for query
-      *     - Early '''partition pruning''' directly in the `Scan` node
-      *     - Absence of `Filter` node
+      * (7) Observe plan for query in '''Spark UI'''
+      *     - Observe early '''partition pruning''' directly in the `Scan` node
+      *     - Notice the absence of `Filter` node
       */
 
     implicit val spark: SparkSession = sparkSession

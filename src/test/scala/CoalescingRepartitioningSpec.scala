@@ -5,7 +5,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   * Coalescing and Refactoring
   *
   * (1) Run the test class.
-  *     Eventually it will block at [[CoalescingRepartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[CoalescingRepartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (2) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -34,19 +34,19 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
     /**
       * Observing Physical Plan when absence of coalescing and repartitioning
       *
-      * (4) Observe plan for query
+      * (4) Observe plan for query in '''Spark UI'''
       *     - Inspect Query 0
       *     - Inspect related Job 0
       *     - Notice Stage 0 and Stage 1 and associated number of tasks
       *     - Notice how number of tasks for Stage 0 relates to `spark.default.parallelism`
       *     - Notice shuffling (`Exchange` node) between Stage 0 and Stage 1
-      *     - Notice how number of tasks for Stage 1 relates to `spark.sql.shuffle.partitions`
+      *     - Notice how number of tasks for Stage 1 (after shuffling) relates to `spark.sql.shuffle.partitions`
       *       [[org.apache.spark.sql.internal.SQLConf.SHUFFLE_PARTITIONS]]
       *
       * (5) Observe parts of saved `order_counts` table
       *     - Look at `spark-warehouse/order_counts` folder
-      *     - Observe `part-XXXXX-xxxxxxxxxxxxxxxx.snappy.parquet` files
-      *     - Notice how they are numbered by task and how each task wrote its corresponding part
+      *     - Observe `part-PPPPP-xxxxxxxxxxxxxxxx.snappy.parquet` files
+      *     - Notice how they are numbered by task (PPPPP) and how each task wrote its corresponding part
       *     - Notice how some tasks did not write their part because of absence of data on the partition
       *     - Be aware there could have been as many file as tasks in Stage 1 (200)
       *     - Be aware there are many small files and it might be suboptimal
@@ -71,7 +71,7 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
     /**
       * Observing Physical Plan when coalescing
       *
-      * (6) Observe plan for query
+      * (6) Observe plan for query in '''Spark UI'''
       *     - Inspect Query 1
       *     - Inspect related Job 1
       *     - Notice Stage 2 and Stage 3 and associated number of tasks
@@ -83,8 +83,8 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
       *
       * (7) Observe parts of saved `order_counts_coalesce` table
       *     - Look at `spark-warehouse/order_counts_coalesce` directory
-      *     - Observe `part-XXXXX-xxxxxxxxxxxxxxxx.snappy.parquet` files
-      *     - Notice how they are numbered by task and how each task wrote its corresponding part
+      *     - Observe `part-PPPPP-xxxxxxxxxxxxxxxx.snappy.parquet` files
+      *     - Notice how they are numbered by task (PPPPP) and how each task wrote its corresponding part
       *     - Notice how some tasks did not write their part because of absence of data on the partition
       *     - Be aware there could have been as many files as tasks in Stage 3 (20)
       *     - Be aware there are now less but bigger parts, at the cost of less parallelism (but no shuffling)
@@ -110,7 +110,7 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
     /**
       * Observing Physical Plan when coalescing
       *
-      * (8) Observe plan for query
+      * (8) Observe plan for query in '''Spark UI'''
       *     - Inspect Query 2
       *     - Inspect related Job 2
       *     - Notice Stage 4, Stage 5 and Stage 6 and associated number of tasks
@@ -123,12 +123,13 @@ class CoalescingRepartitioningSpec extends FlatSpec with Matchers with BeforeAnd
       *
       * (9) Observe parts of saved `order_counts_repartition` table
       *     - Look at `spark-warehouse/order_counts_repartition` directory
-      *     - Observe `part-XXXXX-xxxxxxxxxxxxxxxx.snappy.parquet` files inside
-      *     - Notice how they are numbered by task and how each task wrote its corresponding part
+      *     - Observe `part-PPPPP-xxxxxxxxxxxxxxxx.snappy.parquet` files inside
+      *     - Notice how they are numbered by task (PPPPP) and how each task wrote its corresponding part
       *     - Notice how some tasks did not write their part because of absence of data on the partition
       *     - Be aware there could have been as many files as tasks in Stage 6 (20)
       *     - Be aware there are now less but bigger parts, at the cost of shuffling (but preserved parallelism)
       */
+
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
     import org.apache.spark.sql.functions._

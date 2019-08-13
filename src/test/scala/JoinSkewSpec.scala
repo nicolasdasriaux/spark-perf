@@ -9,7 +9,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   *     [[https://dzone.com/articles/why-your-spark-apps-are-slow-or-failing-part-ii-da Why Your Spark Apps Are Slow Or Failing, Part II: Data Skew and Garbage Collection]]
   *
   * (2) Run the test class.
-  *     Eventually it will block at [[JoinSkewSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[JoinSkewSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (3) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -36,7 +36,7 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   "Join Skew" should "be observable when unbalanced join" in {
     /**
       * (5) Notice how orders are highly unbalanced over customers
-      *     Customer #0 has 1,000,000 orders while customers #2 to #9 have only 5 orders
+      *     Customer #0 has 1,000,000 orders whereas customers #2 to #9 have only 5 orders
       *
       * (6) View timeline of join stage
       *     - Identify Job and stage containing `SortMergeJoin`
@@ -44,6 +44,7 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       *     - Using Event Timeline, notice how one of the tasks takes much longer than any other
       *     - Find other evidences using Summary Metrics table and also Tasks table (size, number of records)
       */
+
     implicit val spark: SparkSession = sparkSession
     import spark.implicits._
 
@@ -61,8 +62,8 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
   it should "be fixable with salting" in {
     /**
-      * (7) Study the code below that does salting
-      * (8) Study the code below that does a salted join
+      * (7) Study the code below that does Salting (specifically additional `salt` columns)
+      * (8) Study the code below that does a Salted Join (specifically use of `salt` columns in join)
       *
       * (9) View timeline of join stage
       *     - Identify Job and stage containing `SortMergeJoin`
@@ -70,6 +71,7 @@ class JoinSkewSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       *     - Using Event Timeline, notice how tasks are now much more balanced
       *     - Find other evidences of this improvement
       */
+
     implicit val spark: SparkSession = sparkSession
     import org.apache.spark.sql.functions._
     import spark.implicits._

@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   *     [[https://www.waitingforcode.com/apache-spark-sql/apache-spark-2.4.0-features-bucket-pruning/read Bucket Pruning]]
   *
   * (2) Run the test class.
-  *     Eventually it will block at [[BucketingSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[BucketingSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (3) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -34,7 +34,7 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when absence of bucketing
       *
-      * (5) Observe plan for query
+      * (5) Observe plan for query in '''Spark UI'''
       *     - Presence of `Scan` fully reading the table
       *     - Presence of `Exchange` node (shuffling) between 2 `HashAggregate` nodes
       *     - `partial_count` for the 1st `HashAggregate` node
@@ -80,9 +80,9 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when presence of bucketing
       *
-      * (8) Observe plan for query
+      * (8) Observe plan for query in '''Spark UI'''
       *     - Presence of `Scan` node reading only potential buckets
-      *     - Presence of `Filter` node to select from potential rows
+      *     - Presence of `Filter` node to select from potential buckets
       *     - Absence of `Exchange` node (shuffling) (useless thanks to bucket '''pre-hash''')
       *     - `partial_count` for the 1st `HashAggregate` node
       *     - `count` for the 2nd `HashAggregate` node

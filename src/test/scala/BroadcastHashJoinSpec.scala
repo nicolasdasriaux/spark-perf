@@ -11,7 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   *     [[https://www.waitingforcode.com/apache-spark-sql/broadcast-join-spark-sql/read Broadcast join in Spark SQL]]
   *
   * (3) Run the test class.
-  *     Eventually it will block at [[BroadcastHashJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[BroadcastHashJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (4) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -42,9 +42,9 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
     /**
       * Observing Physical Plan with `BroadcastHashJoin`
       *
-      * (7) Observe plan for query
-      *     -`BroadcastHashJoin` node
-      *     -`BroadcastExchange` node (broadcast)
+      * (7) Observe plan for query in '''Spark UI'''
+      *     - Notice `BroadcastHashJoin` node
+      *     - Notice `BroadcastExchange` node (broadcast)
       */
 
     /**
@@ -60,6 +60,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * }}}
       *
       * (9) Look at `canBroadcastBySizes` method
+      *     [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.canBroadcastBySizes]]
       *
       * {{{
       * def canBroadcastBySizes(joinType: JoinType, left: LogicalPlan, right: LogicalPlan): Boolean = {
@@ -70,7 +71,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * }}}
       *
       * (10) Look at `canBroadcast` method
-      *     [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.canBroadcast]]
+      *      [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.canBroadcast]]
       *
       * Matches a plan whose output should be small enough to be used in broadcast join.
       *
@@ -82,7 +83,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       *
       * `plan.stats.sizeInBytes` is estimated size (in bytes) for all rows.
       *
-      * (11) Look at spark.sql.autoBroadcastJoinThreshold config
+      * (11) Look at `spark.sql.autoBroadcastJoinThreshold` config
       *      [[org.apache.spark.sql.internal.SQLConf.AUTO_BROADCASTJOIN_THRESHOLD]]
       *      [[org.apache.spark.sql.internal.SQLConf.autoBroadcastJoinThreshold]]
       *
@@ -148,6 +149,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * }}}
       *
       * (16) Look at `canBroadcastByHints`
+      *      [[org.apache.spark.sql.execution.SparkStrategies.JoinSelection.canBroadcastByHints]]
       *
       * {{{
       * private def canBroadcastByHints(joinType: JoinType, left: LogicalPlan, right: LogicalPlan): Boolean = {
@@ -215,7 +217,7 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
       * }
       * }}}
       *
-      * With `plan` for `CustomerDS`
+      * With `plan` as `CustomerDS`
       * ??? (true / false)
       *
       * ??? (YES / NO)
@@ -282,6 +284,9 @@ class BroadcastHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAl
     val customersDS = ECommerce.customersWithKnownRowCountDS(8) //
     val ordersDS = ECommerce.ordersWithKnownRowCountDS(8, customerId => 100)
 
+    /**
+      * (21) Notice alternative way of adding a broadcast hint
+      */
     val broadcastCustomersDS = customersDS.hint("broadcast")
 
     val customersAndOrdersDF = broadcastCustomersDS.as("cst")

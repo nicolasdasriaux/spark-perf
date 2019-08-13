@@ -11,7 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   *     [[https://www.waitingforcode.com/apache-spark-sql/shuffle-join-spark-sql/read Shuffle join in Spark SQL]]
   *
   * (3) Run the test class
-  *     Eventually it will block at [[ShuffledHashJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+  *     Eventually it will block in [[ShuffledHashJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
   * (4) Open Spark UI in browser [[http://localhost:4040]]
   *
@@ -44,9 +44,9 @@ class ShuffledHashJoinSpec extends FlatSpec with Matchers with BeforeAndAfterAll
     /**
       * Observing Physical Plan with `ShuffledHashJoin`
       *
-      * (7) Observe plan for query in '''Spark UI'''
-      *     - `ShuffledHashJoin` node
-      *     - `Exchange` nodes (shuffle)
+      * (7) Observe plan for query in '''Spark UI''' in '''Spark UI'''
+      *     - Notice `ShuffledHashJoin` node
+      *     - Notice `Exchange` nodes (shuffle)
       */
 
     /**
