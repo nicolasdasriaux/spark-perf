@@ -1,22 +1,29 @@
 # Setup
 
-https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe
+## IntelliJ
 
+* Install **IntelliJ IDEA** (https://www.jetbrains.com/idea/download)
+* Be sure install the **Scala plugin**
 
-C:\development\programs\hadoop-2.7.1\bin
+## Windows
 
+On Windows you need to install a special utility to emulate Unix style filesystem.
 
-```
-HADOOP_HOME=C:\development\programs\hadoop-2.7.1
-```
+* Download `winutils` \
+  [https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe]()
 
-```
-winutils chmod -R 777 C:\tmp\hive
-```
+* Find a directory where to install `winutils.exe` \
+  such as `C:\development\programs\hadoop-2.7.1` (or whatever directory, just avoid spaces in path)
+  
+* Copy `winutils.exe` to `bin` sub-directory of `C:\development\programs\hadoop-2.7.1` directory
 
-Schema auto-scan
-JSON Line
-CSV with CR
-JDBC
+* Add `HADOOP_HOME` environment variable
+  ```
+  HADOOP_HOME=C:\development\programs\hadoop-2.7.1
+  ```
 
-http://localhost:4040
+* Add `%HADOOP_HOME%\bin` to `PATH`
+
+* Launch the following command
+  ```
+  winutils chmod -R 777 C:\tmp\hive
