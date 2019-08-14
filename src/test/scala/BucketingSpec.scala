@@ -4,11 +4,11 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 /**
   * Bucketing
   *
-  * (1) Read '''Bucketing''' and '''Bucketing Tips''' section of the following page
-  *     [[https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/ Tips and Best Practices to Take Advantage of Spark 2.x]]
+  * (1) Read '''Bucketing''' and '''Bucketing Tips''' sections of the following page
+  *     [[https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/]]
   *
   * (2) Optionally, read the following page especially the '''Bucket definition''' section
-  *     [[https://www.waitingforcode.com/apache-spark-sql/apache-spark-2.4.0-features-bucket-pruning/read Bucket Pruning]]
+  *     [[https://www.waitingforcode.com/apache-spark-sql/apache-spark-2.4.0-features-bucket-pruning/read]]
   *
   * (3) Run the test class.
   *     Eventually it will block in [[BucketingSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.

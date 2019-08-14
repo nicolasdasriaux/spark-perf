@@ -6,7 +6,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   * Join Skew (and data skew in general)
   *
   * (1) Read the following page
-  *     [[https://dzone.com/articles/why-your-spark-apps-are-slow-or-failing-part-ii-da Why Your Spark Apps Are Slow Or Failing, Part II: Data Skew and Garbage Collection]]
+  *     [[https://dzone.com/articles/why-your-spark-apps-are-slow-or-failing-part-ii-da]]
   *
   * (2) Run the test class.
   *     Eventually it will block in [[JoinSkewSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.

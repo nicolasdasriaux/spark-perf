@@ -2,7 +2,7 @@ import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 /**
-  * Coalescing and Refactoring
+  * Coalescing and Repartitioning
   *
   * (1) Run the test class.
   *     Eventually it will block in [[CoalescingRepartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.

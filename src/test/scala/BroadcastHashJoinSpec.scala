@@ -5,10 +5,10 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
   * Broadcast Hash Join
   *
   * (1) Read '''Broadcast Hash Join''' section of the following page
-  *     [[https://medium.com/@achilleus/https-medium-com-joins-in-apache-spark-part-3-1d40c1e51e1c Joins in Apache Spark, Part 3]]
+  *     [[https://medium.com/@achilleus/https-medium-com-joins-in-apache-spark-part-3-1d40c1e51e1c]]
   *
   * (2) Optionally read the following page
-  *     [[https://www.waitingforcode.com/apache-spark-sql/broadcast-join-spark-sql/read Broadcast join in Spark SQL]]
+  *     [[https://www.waitingforcode.com/apache-spark-sql/broadcast-join-spark-sql/read]]
   *
   * (3) Run the test class.
   *     Eventually it will block in [[BroadcastHashJoinSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.

@@ -5,8 +5,8 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 /**
   * Partitioning
   *
-  * (1) Read '''Parquet Partitioning''', '''Partition Pruning and Predicate Pushdown''' and '''Partitioning Tips''' section of the following page
-  *     [[https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/ Tips and Best Practices to Take Advantage of Spark 2.x]]
+  * (1) Read '''Parquet Partitioning''', '''Partition Pruning and Predicate Pushdown''' and '''Partitioning Tips''' sections of the following page
+  *     [[https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/]]
   *
   * (2) Run the test class.
   *     Eventually it will block in [[PartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
