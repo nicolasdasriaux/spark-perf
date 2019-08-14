@@ -5,12 +5,15 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 /**
   * Partitioning
   *
-  * (1) Run the test class.
+  * (1) Read '''Parquet Partitioning''', '''Partition Pruning and Predicate Pushdown''' and '''Partitioning Tips''' section of the following page
+  *     [[https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/ Tips and Best Practices to Take Advantage of Spark 2.x]]
+  *
+  * (2) Run the test class.
   *     Eventually it will block in [[PartitioningSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
-  * (2) Open Spark UI in browser [[http://localhost:4040]]
+  * (3) Open Spark UI in browser [[http://localhost:4040]]
   *
-  * (3) Follow instructions for each of the test cases
+  * (4) Follow instructions for each of the test cases
   */
 
 class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
@@ -32,7 +35,7 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when absence of partitioning
       *
-      * (4) Observe plan for query in '''Spark UI'''
+      * (5) Observe plan for query in '''Spark UI'''
       *     - Presence of `Scan` fully reading the table
       *     - Presence of `Exchange`
       */
@@ -62,9 +65,9 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Storage Structure of partitioned table
       *
-      * (5) Study the code below that does '''Partitioned Table Creation'''
+      * (6) Study the code below that does '''Partitioned Table Creation'''
       *
-      * (6) Observe structure of saved `country_customers_partition` table
+      * (7) Observe structure of saved `country_customers_partition` table
       *     - Look at `spark-warehouse/country_customers_partition` folder
       *     - Observe sub-directories such as `country=France` containing rows for a partition
       *
@@ -75,7 +78,7 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when presence of partitioning
       *
-      * (7) Observe plan for query in '''Spark UI'''
+      * (8) Observe plan for query in '''Spark UI'''
       *     - Observe early '''partition pruning''' directly in the `Scan` node
       *     - Notice the absence of `Filter` node
       */

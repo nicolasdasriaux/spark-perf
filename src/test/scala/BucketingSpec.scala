@@ -4,15 +4,18 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 /**
   * Bucketing
   *
-  * (1) Read the following page especially the '''Bucket definition''' section
+  * (1) Read '''Bucketing''' and '''Bucketing Tips''' section of the following page
+  *     [[https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/ Tips and Best Practices to Take Advantage of Spark 2.x]]
+  *
+  * (2) Optionally, read the following page especially the '''Bucket definition''' section
   *     [[https://www.waitingforcode.com/apache-spark-sql/apache-spark-2.4.0-features-bucket-pruning/read Bucket Pruning]]
   *
-  * (2) Run the test class.
+  * (3) Run the test class.
   *     Eventually it will block in [[BucketingSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
   *
-  * (3) Open Spark UI in browser [[http://localhost:4040]]
+  * (4) Open Spark UI in browser [[http://localhost:4040]]
   *
-  * (4) Follow instructions for each of the test cases
+  * (5) Follow instructions for each of the test cases
   */
 
 class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
@@ -34,7 +37,7 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when absence of bucketing
       *
-      * (5) Observe plan for query in '''Spark UI'''
+      * (6) Observe plan for query in '''Spark UI'''
       *     - Presence of `Scan` fully reading the table
       *     - Presence of `Exchange` node (shuffling) between 2 `HashAggregate` nodes
       *     - `partial_count` for the 1st `HashAggregate` node
@@ -64,9 +67,9 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Storage Structure of bucketed table
       *
-      * (6) Study the code below that does '''Bucketed Table Creation'''
+      * (7) Study the code below that does '''Bucketed Table Creation'''
       *
-      * (7) Observe structure of saved `orders_bucket` table
+      * (8) Observe structure of saved `orders_bucket` table
       *     - Look at `spark-warehouse/orders_bucket` folder
       *
       *     - Observe `part-PPPPP-xxxxxxxxxxxxxxxx_BBBBB.xxxx.snappy.parquet` files inside
@@ -80,7 +83,7 @@ class BucketingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     /**
       * Observing Physical Plan when presence of bucketing
       *
-      * (8) Observe plan for query in '''Spark UI'''
+      * (9) Observe plan for query in '''Spark UI'''
       *     - Presence of `Scan` node reading only potential buckets
       *     - Presence of `Filter` node to select from potential buckets
       *     - Absence of `Exchange` node (shuffling) (useless thanks to bucket '''pre-hash''')
