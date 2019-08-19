@@ -1,6 +1,6 @@
 # Spark UI Tutorial
 
-# Spark Core Profiling
+## Spark Core Profiling
 
 ![Jobs](images/spark-core-jobs.png)
 
@@ -14,7 +14,7 @@
 
 ![Stage Timeline](images/spark-core-stage-task-timeline.png)
 
-# Spark SQL Profiling
+## Spark SQL Profiling
 
 ![Queries](images/spark-sql-queries.png)
 
