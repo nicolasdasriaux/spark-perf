@@ -3,7 +3,7 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 class SparkSqlProfilingSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
-    .appName("Profiling")
+    .appName("Spark SQL Profiling")
     .master("local[*]")
     .config("spark.default.parallelism", 8) // Default parallelism in Spark
     .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
