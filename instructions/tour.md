@@ -32,7 +32,7 @@ Now
   ![Jobs Timeline](images/spark-core-jobs-timeline.png)
 
 * Navigate to the **Details for Job** page by either clicking:
-  * on a job link in the **Completed Jobs** table,
+  * a job link in the **Completed Jobs** table,
   * or a job in the **Event Timeline**
 
 ### Details for Job
@@ -79,7 +79,7 @@ Finally, page also shows **Tasks** table, a list of all tasks for the stage.
 It shows most notably for each task:
 
 * Duration
-* Various read / write in size and records (here **Shuffle Read Size / Records**)
+* Various read / write expressed in size and records (here **Shuffle Read Size / Records**)
 
 Now
 
@@ -109,7 +109,7 @@ Now
 Page shows a list of Spark SQL **queries** launched by the application.
 
 * **Queries** are triggered by the **driver program** (or application) using a **spark session**.
-* Only **actions** applied to **dataset or dataframe** trigger a **query**.
+* Only **actions** applied to **dataset** or **dataframe** will trigger a **query**.
 * A **query** is analyzed by the _**Catalyst**_ optimizer to eventually produce a **physical execution plan**.
 * **Physical execution plan** will be executed on **Spark Core** using **RDD**s optimized with _**Tungsten**_.
 * A **query** execution will result into **job** executions (1 or more jobs).
