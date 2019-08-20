@@ -5,9 +5,11 @@
 * Install **IntelliJ IDEA** (https://www.jetbrains.com/idea/download)
 * Be sure install the **Scala plugin**
 
-## Windows
+## Hive (Windows only)
 
-On Windows you need to install a special utility to emulate Unix style filesystem.
+:warning: You don't have to install Hadoop to get Hive,
+Spark will emulate just enough Hive (and Hadoop) locally for everything to run properly.
+But, **on Windows** you will need to install a special utility to emulate Unix style filesystem.
 
 * Download `winutils` \
   [https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe]()
