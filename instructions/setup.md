@@ -5,7 +5,7 @@
 * Install **IntelliJ IDEA** (https://www.jetbrains.com/idea/download)
 * Be sure install the **Scala plugin** using **Plugins** section of **Settings**
 
-## JDK
+## Installing JDK
 
 * Install at least JDK 8
 
