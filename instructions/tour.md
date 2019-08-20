@@ -7,7 +7,7 @@
   eventually it will block after all tests have been run,
   keeping Spark UI alive.
 * Open **Spark UI** in a browser [http://localhost:4040]().
-  If another test is already running, Spark UI will bind to port 4041 and so on.
+  If another test is already running, Spark UI will bind to port 4041 and so on. \
   :warning: Be sure to stop the test after this part.
 
 ### Spark Jobs
@@ -96,7 +96,7 @@ Now
   eventually it will block after all tests have been run,
   keeping Spark UI alive.
 * Open **Spark UI** in a browser [http://localhost:4040]().
-  If another test is already running, Spark UI will bind to port 4041 and so on.
+  If another test is already running, Spark UI will bind to port 4041 and so on. \
   :warning: Be sure to stop the test after this part.
 * Click **SQL** tab
 
