@@ -6,9 +6,9 @@
 * Run the test class using **IntelliJ**,
   eventually it will block after all tests have been run,
   keeping Spark UI alive.
-* Open **Spark UI** in a browser [http://localhost:4040]().
+* Open **Spark UI** in a browser [http://localhost:4040](). \
   If another test is already running, Spark UI will bind to port 4041 and so on. \
-  :warning: Be sure to stop the test after this part.
+  So be sure to stop the test after this part. :warning:
 
 ### Spark Jobs
 
@@ -95,9 +95,9 @@ Now
 * Run the test class using **IntelliJ**,
   eventually it will block after all tests have been run,
   keeping Spark UI alive.
-* Open **Spark UI** in a browser [http://localhost:4040]().
+* Open **Spark UI** in a browser [http://localhost:4040](). \
   If another test is already running, Spark UI will bind to port 4041 and so on. \
-  :warning: Be sure to stop the test after this part.
+  So be sure to stop the test after this part. :warning:
 * Click **SQL** tab
 
 ### SQL
