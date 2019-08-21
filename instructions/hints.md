@@ -395,11 +395,11 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Event Timeline** diagram
 
-  ![Skew Event Timeline](images/skew-event-timeline.png)
+  ![Skew Event Timeline](images/join-skew/skew-event-timeline.png)
 
 * **Summary Metrics for 200 Completed Tasks** table
 
-  ![Skew Summary Metrics](images/skew-summary-metrics.png)
+  ![Skew Summary Metrics](images/join-skew/skew-summary-metrics.png)
 
 * **Tasks** table
 
@@ -418,10 +418,10 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Event Timeline** diagram
 
-  ![Salting Event Timeline](images/salting-event-timeline.png)
+  ![Salting Event Timeline](images/join-skew/salting-event-timeline.png)
 
 * **Summary Metrics for 200 Completed Tasks** table
 
-  ![Salting Summary Metrics](images/salting-summary-metrics.png)
+  ![Salting Summary Metrics](images/join-skew/salting-summary-metrics.png)
 
 * **Tasks** table
