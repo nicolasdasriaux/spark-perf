@@ -2,7 +2,7 @@ import org.apache.spark.sql.types._
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
-class CsvReadSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
+class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("CSV Read")
     .master("local[*]")

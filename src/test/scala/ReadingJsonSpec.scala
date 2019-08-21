@@ -2,7 +2,7 @@ import org.apache.spark.sql.types.{LongType, StringType, StructField, StructType
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
-class JsonRead extends FlatSpec with Matchers with BeforeAndAfterAll {
+class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("JSON Read")
     .master("local[*]")
