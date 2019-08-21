@@ -127,7 +127,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Neither Coalescing nor Repartitioning Plan](images/neither-coalescing-nor-repartitioning-plan.png)
+![Neither Coalescing nor Repartitioning Plan](images/coalescing-repartitioning/neither-coalescing-nor-repartitioning-plan.png)
 
 * **Scan** \
   [obj#2]
@@ -162,13 +162,13 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 0**
 
-![Neither Coalescing nor Repartitioning Stages](images/neither-coalescing-nor-repartitioning-stages.png)
+![Neither Coalescing nor Repartitioning Stages](images/coalescing-repartitioning/neither-coalescing-nor-repartitioning-stages.png)
 
 ### Coalescing
 
 **Details for Query 1**
 
-![Coalescing Plan](images/coalescing-plan.png)
+![Coalescing Plan](images/coalescing-repartitioning/coalescing-plan.png)
 
 * **Scan** \
   [obj#18]
@@ -206,13 +206,13 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 1**
 
-![Coalescing Stages](images/coalescing-stages.png)
+![Coalescing Stages](images/coalescing-repartitioning/coalescing-stages.png)
 
 ### Repartitioning
 
 **Details for Query 2**
 
-![Repartitioning Plan](images/repartitioning-plan.png)
+![Repartitioning Plan](images/coalescing-repartitioning/repartitioning-plan.png)
 
 * **Scan** \
   [obj#34]
@@ -253,7 +253,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 2**
 
-![Repartitioning Stage](images/repartitioning-stages.png)
+![Repartitioning Stage](images/coalescing-repartitioning/repartitioning-stages.png)
 
 ## Reading CSV
 
