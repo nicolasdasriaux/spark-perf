@@ -7,6 +7,8 @@ Hints will help you navigating and finding information in Spark UI.
 * [Partitioning](#partitioning)
 * [Bucketing](#bucketing)
 * [Coalescing and Repartitioning](#coalescing-and-repartitioning)
+* [Reading CSV](#reading-csv)
+* [Reading JSON](#reading-json)
 * [Broadcast Hash Join](#broadcast-hash-join)
 * [Shuffled Hash Join](#shuffled-hash-join)
 * [Sort Merge Join](#sort-merge-join)
