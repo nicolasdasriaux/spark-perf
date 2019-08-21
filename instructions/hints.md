@@ -255,7 +255,51 @@ Hints will help you navigating and finding information in Spark UI.
 
 ## Reading CSV
 
+### Non-Multiline CSV
+
+**Spark Jobs**
+
+![Non-Multiline CSV Reading Jobs](images/reading-csv/non-multiline-reading-jobs.png)
+
+**Details for Job 2**
+
+![Non-Multiline CSV Reading Job](images/reading-csv/non-multiline-reading-job.png)
+
+### Multiline CSV
+
+**Spark Jobs**
+
+![Multiline CSV Reading Jobs](images/reading-csv/multiline-reading-jobs.png)
+
+**Details for Job 3**
+
+![Multiline CSV Reading Job](images/reading-csv/multiline-reading-job.png)
+
+### Schema Inference
+
+**Spark Jobs**
+
+![CSV with Schema Inference Reading Jobs](images/reading-csv/schema-inference-reading-jobs.png)
+
+**Details for Stage 4** (of Job 4)
+
+![CSV with Schema Inference Checking Job](images/reading-csv/schema-inference-checking-job.png)
+
+**Details for Stage 5** (of Job 5)
+
+![CSV with Schema Inference Inferring Job](images/reading-csv/schema-inference-inferring-jobs.png)
+
+**Details for Stage 6** (of Job 6)
+
+![CSV with Schema Inference Reading Job](images/reading-csv/schema-inference-reading-job.png)
+
 ## Reading JSON
+
+### JSON Lines File
+
+### JSON File
+
+### Schema Inference
 
 ## Broadcast Hash Join
 
@@ -331,7 +375,6 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Project** \
   [`id`#2L AS `customer_id`#24L, `name`#3, `id`#7L AS `order_id`#25L]
-
 
 ## Join Skew
 
