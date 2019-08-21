@@ -4,13 +4,15 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
-    .appName("CSV Read")
+    .appName("Reading CSV")
     .master("local[*]")
     .config("spark.default.parallelism", 8) // Default parallelism in Spark
     .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
 
     .enableHiveSupport()
     .getOrCreate()
+
+  private val hdfsPath = SparkPerf.hdfsPath()
 
   override def beforeAll() {
     implicit val spark: SparkSession = sparkSession
@@ -26,7 +28,7 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .write
       .option("header", true)
       .mode(SaveMode.Overwrite)
-      .csv("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.csv")
+      .csv(hdfsPath.resolve("customers.csv").toString)
 
 
     (1 to rowCount)
@@ -36,7 +38,7 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .write
       .option("header", true)
       .mode(SaveMode.Overwrite)
-      .csv("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers-multiline.csv")
+      .csv(hdfsPath.resolve("customers-multiline.csv").toString)
   }
 
   override def afterAll() {
@@ -54,11 +56,12 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       )
     )
 
-    spark.read
+    val customersDF = spark.read
       .option("header", true)
       .schema(customerSchema) // Set schema
-      .csv("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.csv")
-      .collect()
+      .csv(hdfsPath.resolve("customers.csv").toString)
+
+    customersDF.collect()
   }
 
   "Reading a multiline CSV" should "not be parallelizable" in {
@@ -75,7 +78,7 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .option("header", true)
       .option("multiline", true)
       .schema(customerSchema) // Set schema
-      .csv("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers-multiline.csv")
+      .csv(hdfsPath.resolve("customers-multiline.csv").toString)
 
     customersDF.collect()
   }
@@ -87,7 +90,7 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .option("header", true)
       .option("inferSchema", true)
       .option("samplingRatio", 1.0) // samplingRatio (default is 1.0): defines fraction of rows used for schema inferring
-      .csv("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.csv")
+      .csv(hdfsPath.resolve("customers.csv").toString)
 
     customersDF.collect()
   }

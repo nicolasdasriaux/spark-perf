@@ -4,13 +4,15 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
-    .appName("JSON Read")
+    .appName("Reading JSON")
     .master("local[*]")
     .config("spark.default.parallelism", 8) // Default parallelism in Spark
     .config("spark.sql.shuffle.partitions", 200) // Parallelism when shuffling in Spark SQL
 
     .enableHiveSupport()
     .getOrCreate()
+
+  private val hdfsPath = SparkPerf.hdfsPath()
 
   override protected def beforeAll(): Unit = {
     implicit val spark: SparkSession = sparkSession
@@ -30,7 +32,7 @@ class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .coalesce(1) // Force to write just 1 big part
       .write
       .mode(SaveMode.Overwrite)
-      .json("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.jsonl")
+      .json(hdfsPath.resolve("customers.jsonl").toString)
 
     val jsonDF =
       Seq("[").toDF union
@@ -48,7 +50,7 @@ class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .coalesce(1) // Force to write just 1 big part
       .write
       .mode(SaveMode.Overwrite)
-      .text("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.json")
+      .text(hdfsPath.resolve("customers.json").toString)
   }
 
   override def afterAll() {
@@ -68,7 +70,7 @@ class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
 
     val customersDF = spark.read
       .schema(customerSchema) // Set schema
-      .json("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.jsonl")
+      .json(hdfsPath.resolve("customers.jsonl").toString)
 
     customersDF.collect()
   }
@@ -86,7 +88,7 @@ class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val customersDF = spark.read
       .option("multiline", true)
       .schema(customerSchema) // Set schema
-      .json("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.json")
+      .json(hdfsPath.resolve("customers.json").toString)
 
     customersDF.collect()
   }
@@ -97,7 +99,7 @@ class ReadingJsonSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
     val customersDF = spark.read
       .option("samplingRatio", 1.0) // samplingRatio (default is 1.0): defines fraction of input JSON objects used for schema inferring
       // No schema set
-      .json("C:\\development\\presentations\\spark-perf\\src\\test\\resources\\customers.jsonl")
+      .json(hdfsPath.resolve("customers.jsonl").toString)
 
     customersDF.collect()
   }
