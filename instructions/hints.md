@@ -20,7 +20,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without Partitioning Plan](images/without-partitioning-plan.png)
+![Without Partitioning Plan](images/partitioning/without-partitioning-plan.png)
 
 * **FileScan parquet** \
   `default.country_customers_no_partition` \
@@ -41,7 +41,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 3**
 
-![With Partitioning Plan](images/with-partitioning-plan.png)
+![With Partitioning Plan](images/partitioning/with-partitioning-plan.png)
 
 * **FileScan parquet** \
   default.country_customers_partition \
@@ -63,7 +63,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without bucketing Plan](images/without-bucketing-plan.png)
+![Without bucketing Plan](images/bucketing/without-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_no_bucket` \
@@ -94,7 +94,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 3**
 
-![With Bucketing Plan](images/with-bucketing-plan.png)
+![With Bucketing Plan](images/bucketing/with-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_bucket` \
