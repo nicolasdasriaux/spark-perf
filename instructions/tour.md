@@ -104,7 +104,7 @@ Now
 
 **SQL** page displays.
 
-![Queries](images/spark-sql-queries.png)
+![Queries](images/spark-sql/queries.png)
 
 Page shows a list of Spark SQL **queries** launched by the application.
 
@@ -130,7 +130,7 @@ Now
 
 **Details for Query** page displays (here query 0).
 
-![Query](images/spark-sql-query.png)
+![Query](images/spark-sql/query-job.png)
 
 Page shows **Succeeded Jobs** links to jobs which were launched the execute the query.
 
@@ -148,7 +148,7 @@ Now
 
 **Details for Job** page displays (here job 0).
 
-![Query Job](images/spark-sql-job.png)
+![Query Job](images/spark-sql/job.png)
 
 Back in Spark Core where Spark SQL queries are eventually executed, notice:
 
