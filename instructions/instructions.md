@@ -21,6 +21,16 @@
 * Go to `CoalescingRepartitioningSpec` class
 * Follow instructions ([hints for Spark UI](hints.md#coalescing-and-repartitioning))
 
+## Reading CSV
+
+* Go to `ReadingCsvSpec` class
+* Follow instructions ([hints for Spark UI](hints.md#reading-csv))
+
+## Reading JSON
+
+* Go to `ReadingJsonSpec` class
+* Follow instructions ([hints for Spark UI](hints.md#reading-json))
+
 ## Estimating Size per Row
 
 * Go to `EstimatingSizePerRowSpec` class

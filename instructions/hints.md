@@ -253,6 +253,10 @@ Hints will help you navigating and finding information in Spark UI.
 
 ![Repartitioning Stage](images/repartitioning-stages.png)
 
+## Reading CSV
+
+## Reading JSON
+
 ## Broadcast Hash Join
 
 **Details for Query 0** (or 1 or 2)
