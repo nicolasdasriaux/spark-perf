@@ -1,4 +1,6 @@
-## Sort Merge Join
+# Sort Merge Join
+
+**Warning icons** :warning: signal elements that are important to be aware of.
 
 **Details for Query 0**
 

@@ -1,6 +1,8 @@
-## Bucketing
+# Bucketing
 
-### Without bucketing
+**Warning icons** :warning: signal elements that are important to be aware of.
+
+## Without bucketing
 
 **Details for Query 1**
 
@@ -31,7 +33,7 @@
   functions=[_count_:warning:(`id`#8L)], \
   output=[`customer_id`#9L, `order_count`#15L])
 
-### With Bucketing
+## With Bucketing
 
 **Details for Query 3**
 

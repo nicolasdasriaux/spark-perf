@@ -1,6 +1,8 @@
-## Partitioning
+# Partitioning
 
-### Without Partitioning
+**Warning icons** :warning: signal elements that are important to be aware of.
+
+## Without Partitioning
 
 **Details for Query 1**
 
@@ -21,7 +23,7 @@
 * **Project** \
   [`id`#13L, `name`#14, `country`#15]
 
-### With Partitioning
+## With Partitioning
 
 **Details for Query 3**
 

@@ -1,6 +1,8 @@
-## Reading CSV
+# Reading CSV
 
-### Non-Multiline CSV
+**Warning icons** :warning: signal elements that are important to be aware of.
+
+## Non-Multiline CSV
 
 **Spark Jobs**
 
@@ -10,7 +12,7 @@
 
 ![Non-Multiline CSV Reading Job](non-multiline-reading-job.png)
 
-### Multiline CSV
+## Multiline CSV
 
 **Spark Jobs**
 
@@ -20,7 +22,7 @@
 
 ![Multiline CSV Reading Job](multiline-reading-job.png)
 
-### Schema Inference
+## Schema Inference
 
 **Spark Jobs**
 

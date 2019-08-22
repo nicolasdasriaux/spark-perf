@@ -2,8 +2,6 @@
 
 Hints will help you navigating and finding information in Spark UI.
 
-**Warning icons** :warning: signal elements that are important to be aware of.
-
 * [Partitioning](partitioning/hints.md)
 * [Bucketing](bucketing/hints.md)
 * [Coalescing and Repartitioning](coalescing-and-repartitioning/hints.md)

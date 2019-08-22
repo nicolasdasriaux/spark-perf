@@ -1,6 +1,8 @@
-## Coalescing and Repartitioning
+# Coalescing and Repartitioning
 
-### Neither coalescing nor repartitioning
+**Warning icons** :warning: signal elements that are important to be aware of.
+
+## Neither coalescing nor repartitioning
 
 **Details for Query 0**
 
@@ -41,7 +43,7 @@
 
 ![Neither Coalescing nor Repartitioning Stages](neither-coalescing-nor-repartitioning-stages.png)
 
-### Coalescing
+## Coalescing
 
 **Details for Query 1**
 
@@ -85,7 +87,7 @@
 
 ![Coalescing Stages](coalescing-stages.png)
 
-### Repartitioning
+## Repartitioning
 
 **Details for Query 2**
 

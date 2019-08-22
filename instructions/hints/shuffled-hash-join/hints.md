@@ -1,4 +1,6 @@
-## Shuffled Hash Join
+# Shuffled Hash Join
+
+**Warning icons** :warning: signal elements that are important to be aware of.
 
 **Details for Query 0**
 

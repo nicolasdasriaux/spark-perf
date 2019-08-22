@@ -1,4 +1,6 @@
-## Broadcast Hash Join
+# Broadcast Hash Join
+
+**Warning icons** :warning: signal elements that are important to be aware of.
 
 **Details for Query 0** (or 1 or 2)
 

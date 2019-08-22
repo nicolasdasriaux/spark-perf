@@ -1,7 +1,9 @@
-## Reading JSON
+# Reading JSON
 
-### JSON Lines File
+**Warning icons** :warning: signal elements that are important to be aware of.
 
-### JSON File
+## JSON Lines File
 
-### Schema Inference
+## JSON File
+
+## Schema Inference

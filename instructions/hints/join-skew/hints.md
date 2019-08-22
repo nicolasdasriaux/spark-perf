@@ -1,6 +1,8 @@
-## Join Skew
+# Join Skew
 
-### Observing skew
+**Warning icons** :warning: signal elements that are important to be aware of.
+
+## Observing skew
 
 **Details for Query 0**
 
@@ -23,7 +25,7 @@
 
 * **Tasks** table
 
-### Fixing skew with salting
+## Fixing skew with salting
 
 **Details for Query 1**
 
