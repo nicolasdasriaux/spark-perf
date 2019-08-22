@@ -4,7 +4,7 @@
 * Read **Parquet Partitioning**, **Partition Pruning and Predicate Pushdown** and **Partitioning Tips** sections of
   [Tips and Best Practices to Take Advantage of Spark 2.x](https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/)
 * Go to `PartitioningSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#partitioning))
+* Follow instructions ([hints for Spark UI](hints/hints.md#partitioning))
 
 ## Bucketing
 
@@ -14,22 +14,22 @@
   [Apache Spark 2.4.0 Features - Bucket Pruning](https://www.waitingforcode.com/apache-spark-sql/apache-spark-2.4.0-features-bucket-pruning/read)
   especially the **Bucket definition** section
 * Go to `BucketingSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#bucketing))
+* Follow instructions ([hints for Spark UI](hints/hints.md#bucketing))
 
 ## Coalescing and Repartitioning
 
 * Go to `CoalescingRepartitioningSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#coalescing-and-repartitioning))
+* Follow instructions ([hints for Spark UI](hints/hints.md#coalescing-and-repartitioning))
 
 ## Reading CSV
 
 * Go to `ReadingCsvSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#reading-csv))
+* Follow instructions ([hints for Spark UI](hints/hints.md#reading-csv))
 
 ## Reading JSON
 
 * Go to `ReadingJsonSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#reading-json))
+* Follow instructions ([hints for Spark UI](hints/hints.md#reading-json))
 
 ## Estimating Size per Row
 
@@ -43,7 +43,7 @@
 * Optionally read
   [Broadcast Join in Spark SQL](https://www.waitingforcode.com/apache-spark-sql/broadcast-join-spark-sql/read)
 * Go to `BroadcastHashJoinSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#broadcast-hash-join))
+* Follow instructions ([hints for Spark UI](hints/hints.md#broadcast-hash-join))
 
 ## Shuffled Hash Join
 
@@ -52,7 +52,7 @@
 * Optionally read
   [Shuffle Join in Spark SQL](https://www.waitingforcode.com/apache-spark-sql/shuffle-join-spark-sql/read)
 * Go to `ShuffledHashJoinSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#shuffled-hash-join))
+* Follow instructions ([hints for Spark UI](hints/hints.md#shuffled-hash-join))
 
 ## Sort Merge Join
 
@@ -61,10 +61,10 @@
 * Optionally read
   [Sort-merge Join in Spark SQL](https://www.waitingforcode.com/apache-spark-sql/sort-merge-join-spark-sql/read)
 * Go to `SortMergeJoinSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#sort-merge-join))
+* Follow instructions ([hints for Spark UI](hints/hints.md#sort-merge-join))
 
 ## Join Skew
 * Read **What Is Data Skew?** section of
   [Why Your Spark Apps Are Slow Or Failing, Part II: Data Skew and Garbage Collection](https://dzone.com/articles/why-your-spark-apps-are-slow-or-failing-part-ii-da)
 * Go to `JoinSkewSpec` class
-* Follow instructions ([hints for Spark UI](hints.md#join-skew))
+* Follow instructions ([hints for Spark UI](hints/hints.md#join-skew))

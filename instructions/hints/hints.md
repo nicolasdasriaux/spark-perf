@@ -20,7 +20,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without Partitioning Plan](images/partitioning/without-partitioning-plan.png)
+![Without Partitioning Plan](partitioning/without-partitioning-plan.png)
 
 * **FileScan parquet** \
   `default.country_customers_no_partition` \
@@ -41,7 +41,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 3**
 
-![With Partitioning Plan](images/partitioning/with-partitioning-plan.png)
+![With Partitioning Plan](partitioning/with-partitioning-plan.png)
 
 * **FileScan parquet** \
   default.country_customers_partition \
@@ -63,7 +63,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 1**
 
-![Without bucketing Plan](images/bucketing/without-bucketing-plan.png)
+![Without bucketing Plan](bucketing/without-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_no_bucket` \
@@ -94,7 +94,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 3**
 
-![With Bucketing Plan](images/bucketing/with-bucketing-plan.png)
+![With Bucketing Plan](bucketing/with-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_bucket` \
@@ -127,7 +127,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Neither Coalescing nor Repartitioning Plan](images/coalescing-repartitioning/neither-coalescing-nor-repartitioning-plan.png)
+![Neither Coalescing nor Repartitioning Plan](coalescing-repartitioning/neither-coalescing-nor-repartitioning-plan.png)
 
 * **Scan** \
   [obj#2]
@@ -162,13 +162,13 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 0**
 
-![Neither Coalescing nor Repartitioning Stages](images/coalescing-repartitioning/neither-coalescing-nor-repartitioning-stages.png)
+![Neither Coalescing nor Repartitioning Stages](coalescing-repartitioning/neither-coalescing-nor-repartitioning-stages.png)
 
 ### Coalescing
 
 **Details for Query 1**
 
-![Coalescing Plan](images/coalescing-repartitioning/coalescing-plan.png)
+![Coalescing Plan](coalescing-repartitioning/coalescing-plan.png)
 
 * **Scan** \
   [obj#18]
@@ -206,13 +206,13 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 1**
 
-![Coalescing Stages](images/coalescing-repartitioning/coalescing-stages.png)
+![Coalescing Stages](coalescing-repartitioning/coalescing-stages.png)
 
 ### Repartitioning
 
 **Details for Query 2**
 
-![Repartitioning Plan](images/coalescing-repartitioning/repartitioning-plan.png)
+![Repartitioning Plan](coalescing-repartitioning/repartitioning-plan.png)
 
 * **Scan** \
   [obj#34]
@@ -253,7 +253,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Job 2**
 
-![Repartitioning Stage](images/coalescing-repartitioning/repartitioning-stages.png)
+![Repartitioning Stage](coalescing-repartitioning/repartitioning-stages.png)
 
 ## Reading CSV
 
@@ -261,39 +261,39 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Spark Jobs**
 
-![Non-Multiline CSV Reading Jobs](images/reading-csv/non-multiline-reading-jobs.png)
+![Non-Multiline CSV Reading Jobs](reading-csv/non-multiline-reading-jobs.png)
 
 **Details for Job 2**
 
-![Non-Multiline CSV Reading Job](images/reading-csv/non-multiline-reading-job.png)
+![Non-Multiline CSV Reading Job](reading-csv/non-multiline-reading-job.png)
 
 ### Multiline CSV
 
 **Spark Jobs**
 
-![Multiline CSV Reading Jobs](images/reading-csv/multiline-reading-jobs.png)
+![Multiline CSV Reading Jobs](reading-csv/multiline-reading-jobs.png)
 
 **Details for Job 3**
 
-![Multiline CSV Reading Job](images/reading-csv/multiline-reading-job.png)
+![Multiline CSV Reading Job](reading-csv/multiline-reading-job.png)
 
 ### Schema Inference
 
 **Spark Jobs**
 
-![CSV with Schema Inference Reading Jobs](images/reading-csv/schema-inference-reading-jobs.png)
+![CSV with Schema Inference Reading Jobs](reading-csv/schema-inference-reading-jobs.png)
 
 **Details for Stage 4** (of Job 4)
 
-![CSV with Schema Inference Checking Job](images/reading-csv/schema-inference-checking-job.png)
+![CSV with Schema Inference Checking Job](reading-csv/schema-inference-checking-job.png)
 
 **Details for Stage 5** (of Job 5)
 
-![CSV with Schema Inference Inferring Job](images/reading-csv/schema-inference-inferring-jobs.png)
+![CSV with Schema Inference Inferring Job](reading-csv/schema-inference-inferring-jobs.png)
 
 **Details for Stage 6** (of Job 6)
 
-![CSV with Schema Inference Reading Job](images/reading-csv/schema-inference-reading-job.png)
+![CSV with Schema Inference Reading Job](reading-csv/schema-inference-reading-job.png)
 
 ## Reading JSON
 
@@ -307,7 +307,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0** (or 1 or 2)
 
-![Broadcast Hash Join Plan](images/broadcast-hash-join/broadcast-hash-join-plan.png)
+![Broadcast Hash Join Plan](broadcast-hash-join/broadcast-hash-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -328,7 +328,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Shuffled Hash Join Plan](images/shuffled-hash-join/shuffled-hash-join-plan.png)
+![Shuffled Hash Join Plan](shuffled-hash-join/shuffled-hash-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -352,7 +352,7 @@ Hints will help you navigating and finding information in Spark UI.
 
 **Details for Query 0**
 
-![Sort Merge Join Plan](images/sort-merge-join/sort-merge-join-plan.png)
+![Sort Merge Join Plan](sort-merge-join/sort-merge-join-plan.png)
 
 * **LocalTableScan** \
   [`id`#2L, `name`#3]
@@ -395,11 +395,11 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Event Timeline** diagram
 
-  ![Skew Event Timeline](images/join-skew/skew-event-timeline.png)
+  ![Skew Event Timeline](join-skew/skew-event-timeline.png)
 
 * **Summary Metrics for 200 Completed Tasks** table
 
-  ![Skew Summary Metrics](images/join-skew/skew-summary-metrics.png)
+  ![Skew Summary Metrics](join-skew/skew-summary-metrics.png)
 
 * **Tasks** table
 
@@ -418,10 +418,10 @@ Hints will help you navigating and finding information in Spark UI.
 
 * **Event Timeline** diagram
 
-  ![Salting Event Timeline](images/join-skew/salting-event-timeline.png)
+  ![Salting Event Timeline](join-skew/salting-event-timeline.png)
 
 * **Summary Metrics for 200 Completed Tasks** table
 
-  ![Salting Summary Metrics](images/join-skew/salting-summary-metrics.png)
+  ![Salting Summary Metrics](join-skew/salting-summary-metrics.png)
 
 * **Tasks** table
