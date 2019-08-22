@@ -29,7 +29,7 @@
 ## Reading JSON
 
 * Go to `ReadingJsonSpec` class
-* Follow instructions ([hints for Spark UI](hints/#reading-json))
+* Follow instructions ([hints for Spark UI](hints/reading-json/hints.md))
 
 ## Estimating Size per Row
 

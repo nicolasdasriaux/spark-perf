@@ -8,19 +8,11 @@ Hints will help you navigating and finding information in Spark UI.
 * [Bucketing](bucketing/hints.md)
 * [Coalescing and Repartitioning](coalescing-and-repartitioning/hints.md)
 * [Reading CSV](reading-csv/hints.md)
-* [Reading JSON](#reading-json)
+* [Reading JSON](reading-json/hints.md)
 * [Broadcast Hash Join](#broadcast-hash-join)
 * [Shuffled Hash Join](#shuffled-hash-join)
 * [Sort Merge Join](#sort-merge-join)
 * [Join Skew](#join-skew)
-
-## Reading JSON
-
-### JSON Lines File
-
-### JSON File
-
-### Schema Inference
 
 ## Broadcast Hash Join
 
