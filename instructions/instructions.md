@@ -14,7 +14,7 @@
   [Apache Spark 2.4.0 Features - Bucket Pruning](https://www.waitingforcode.com/apache-spark-sql/apache-spark-2.4.0-features-bucket-pruning/read)
   especially the **Bucket definition** section
 * Go to `BucketingSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#bucketing))
+* Follow instructions ([hints for Spark UI](hints/bucketing/hints.md))
 
 ## Coalescing and Repartitioning
 
