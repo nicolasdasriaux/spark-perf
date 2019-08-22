@@ -4,7 +4,7 @@
 * Read **Parquet Partitioning**, **Partition Pruning and Predicate Pushdown** and **Partitioning Tips** sections of
   [Tips and Best Practices to Take Advantage of Spark 2.x](https://mapr.com/blog/tips-and-best-practices-to-take-advantage-of-spark-2-x/)
 * Go to `PartitioningSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#partitioning))
+* Follow instructions ([hints for Spark UI](hints/partitioning/hints.md))
 
 ## Bucketing
 
