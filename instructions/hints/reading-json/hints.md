@@ -20,8 +20,8 @@
 
 ![JSON Lines Reading Plan](json-lines-reading-plan.png)
 
-Query 2 - Job 2 - Stage 2 \
-**Details for Stage 2**
+Query 2 - Job 2 \
+**Details for Jon 2**
 
 ![JSON Lines Reading Job](json-lines-reading-job.png)
 
@@ -31,8 +31,8 @@ Query 2 - Job 2 - Stage 2 \
 
 ![JSON Reading Plan](json-reading-plan.png)
 
-Query 3 - Job 3 - Stage 3 \
-**Details for Stage 3**
+Query 3 - Job 3 \
+**Details for Job 3**
 
 ![JSON Reading Job](json-reading-job.png)
 
