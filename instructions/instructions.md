@@ -43,7 +43,7 @@
 * Optionally read
   [Broadcast Join in Spark SQL](https://www.waitingforcode.com/apache-spark-sql/broadcast-join-spark-sql/read)
 * Go to `BroadcastHashJoinSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#broadcast-hash-join))
+* Follow instructions ([hints for Spark UI](hints/broadcast-hash-join/hints.md))
 
 ## Shuffled Hash Join
 
@@ -52,7 +52,7 @@
 * Optionally read
   [Shuffle Join in Spark SQL](https://www.waitingforcode.com/apache-spark-sql/shuffle-join-spark-sql/read)
 * Go to `ShuffledHashJoinSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#shuffled-hash-join))
+* Follow instructions ([hints for Spark UI](hints/shuffled-hash-join/hints.md))
 
 ## Sort Merge Join
 
@@ -61,7 +61,7 @@
 * Optionally read
   [Sort-merge Join in Spark SQL](https://www.waitingforcode.com/apache-spark-sql/sort-merge-join-spark-sql/read)
 * Go to `SortMergeJoinSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#sort-merge-join))
+* Follow instructions ([hints for Spark UI](hints/sort-merge-join/hints.md))
 
 ## Join Skew
 * Read **What Is Data Skew?** section of
