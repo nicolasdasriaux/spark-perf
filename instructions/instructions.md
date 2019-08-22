@@ -19,7 +19,7 @@
 ## Coalescing and Repartitioning
 
 * Go to `CoalescingRepartitioningSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#coalescing-and-repartitioning))
+* Follow instructions ([hints for Spark UI](hints/coalescing-and-repartitioning/hints.md))
 
 ## Reading CSV
 

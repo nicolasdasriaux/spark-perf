@@ -4,7 +4,7 @@
 
 **Details for Query 1**
 
-![Without bucketing Plan](bucketing/without-bucketing-plan.png)
+![Without bucketing Plan](without-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_no_bucket` \
@@ -35,7 +35,7 @@
 
 **Details for Query 3**
 
-![With Bucketing Plan](bucketing/with-bucketing-plan.png)
+![With Bucketing Plan](with-bucketing-plan.png)
 
 * **FileScan parquet** \
   `default.orders_bucket` \
