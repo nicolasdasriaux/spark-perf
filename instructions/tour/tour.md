@@ -14,7 +14,7 @@
 
 **Spark Jobs** page displays.
 
-![Jobs](images/spark-core/jobs.png)
+![Jobs](spark-core/jobs.png)
 
 Page shows a list of **jobs** launched by the application.
 
@@ -29,7 +29,7 @@ Now
 * View the timeline of jobs by unfolding **Event Timeline**.
   It will show **job** executions on a timeline.
 
-  ![Jobs Timeline](images/spark-core/jobs-timeline.png)
+  ![Jobs Timeline](spark-core/jobs-timeline.png)
 
 * Navigate to the **Details for Job** page by either clicking:
   * a job link in the **Completed Jobs** table,
@@ -39,7 +39,7 @@ Now
 
 **Details for Job** page displays (here job 0).
 
-![Job](images/spark-core/job.png)
+![Job](spark-core/job.png)
 
 Page shows a **DAG Visualization** (directed acyclic graph) for the **job**.
 * A **job** is executed over **stages**, some stages may run simultaneously.
@@ -58,7 +58,7 @@ Now
 * View the timeline of job by unfolding **Event Timeline**.
   It will show **stage** executions on a timeline.
 
-  ![Job Timeline](images/spark-core/job-timeline.png)
+  ![Job Timeline](spark-core/job-timeline.png)
 
 * Navigate to the **Details for Stage** page by either clicking:
   * on a stage link in the **Completed Stages** table,
@@ -68,7 +68,7 @@ Now
 
 **Details for Stage** page displays (here stage 1).
 
-![Stage](images/spark-core/stage.png)
+![Stage](spark-core/stage.png)
 
 Page shows a **DAG Visualization** of the stage.
 
@@ -86,7 +86,7 @@ Now
 * View the timeline of stage by unfolding **Event Timeline**.
   It will show **task** executions on a timeline.
 
-  ![Stage Timeline](images/spark-core/stage-timeline.png)
+  ![Stage Timeline](spark-core/stage-timeline.png)
 
 ## Spark SQL Profiling
 
@@ -104,7 +104,7 @@ Now
 
 **SQL** page displays.
 
-![Queries](images/spark-sql/queries.png)
+![Queries](spark-sql/queries.png)
 
 Page shows a list of Spark SQL **queries** launched by the application.
 
@@ -130,7 +130,7 @@ Now
 
 **Details for Query** page displays (here query 0).
 
-![Query](images/spark-sql/query-job.png)
+![Query](spark-sql/query-job.png)
 
 Page shows **Succeeded Jobs** links to jobs which were launched the execute the query.
 
@@ -148,7 +148,7 @@ Now
 
 **Details for Job** page displays (here job 0).
 
-![Query Job](images/spark-sql/job.png)
+![Query Job](spark-sql/job.png)
 
 Back in Spark Core where Spark SQL queries are eventually executed, notice:
 
