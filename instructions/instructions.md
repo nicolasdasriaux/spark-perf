@@ -24,12 +24,12 @@
 ## Reading CSV
 
 * Go to `ReadingCsvSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#reading-csv))
+* Follow instructions ([hints for Spark UI](hints/reading-csv/hints.md))
 
 ## Reading JSON
 
 * Go to `ReadingJsonSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#reading-json))
+* Follow instructions ([hints for Spark UI](hints/#reading-json))
 
 ## Estimating Size per Row
 
