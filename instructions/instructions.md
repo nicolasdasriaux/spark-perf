@@ -67,4 +67,4 @@
 * Read **What Is Data Skew?** section of
   [Why Your Spark Apps Are Slow Or Failing, Part II: Data Skew and Garbage Collection](https://dzone.com/articles/why-your-spark-apps-are-slow-or-failing-part-ii-da)
 * Go to `JoinSkewSpec` class
-* Follow instructions ([hints for Spark UI](hints/hints.md#join-skew))
+* Follow instructions ([hints for Spark UI](hints/join-skew/hints.md))
