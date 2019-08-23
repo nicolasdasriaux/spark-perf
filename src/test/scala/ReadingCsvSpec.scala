@@ -2,6 +2,17 @@ import org.apache.spark.sql.types._
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
+/**
+ * Coalescing and Repartitioning
+ *
+ * (1) Run the test class.
+ *     Eventually it will block in [[ReadingCsvSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
+ *
+ * (2) Open Spark UI in browser [[http://localhost:4040]]
+ *
+ * (3) Follow instructions for each of the test cases
+ */
+
 class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   val sparkSession: SparkSession = SparkSession.builder()
     .appName("Reading CSV")
@@ -30,7 +41,6 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       .mode(SaveMode.Overwrite)
       .csv(hdfsPath.resolve("customers.csv").toString)
 
-
     (1 to rowCount)
       .toDF("id")
       .select($"id", concat(lit("First Name "), $"id", lit("\nLast Name "), $"id").as("name"))
@@ -47,6 +57,24 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   "Reading a non-multiline CSV" should "be parallelizable" in {
+    /**
+     * (4) Take a look at `hdfs/customers.csv` directory
+     *     - Notice single part
+     *     - Notice absence of LF in the middle of lines
+     *
+     * (5) Map **Queries** to code lines of this test using line number (and to which Jobs they map to)
+     *     - `collect` method call line
+     *
+     * (6) Map **Jobs** to code lines of this test using line number
+     *     - `collect` method call line
+     *
+     * (7) Map **Stages** to code lines of this test using line number
+     *     - `collect` method call line
+     *
+     * (8) Identify how many tasks are used to:
+     *     - Read non-multiline CSV
+     */
+
     implicit val spark: SparkSession = sparkSession
 
     val customerSchema = StructType(
@@ -65,6 +93,24 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   "Reading a multiline CSV" should "not be parallelizable" in {
+    /**
+     * (9) Take a look at `hdfs/customers-multiline.csv` directory
+     *     - Notice single part
+     *     - Notice presence of LF in the middle of lines
+     *
+     * (10) Map **Queries** to code lines of this test using line number (and to which Jobs they map to)
+     *      - `collect` method call line
+     *
+     * (11) Map **Jobs** to code lines of this test using line number
+     *      - `collect` method call line
+     *
+     * (12) Map **Stages** to code lines of this test using line number
+     *      - `collect` method call line
+     *
+     * (13) Identify how many tasks are used to:
+     *      - Read multiline CSV
+     */
+
     implicit val spark: SparkSession = sparkSession
 
     val customerSchema = StructType(
@@ -84,6 +130,25 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
   }
 
   "Reading a CSV with schema inference" should "add an additional full scan before reading" in {
+    /**
+     * (14) Map **Queries** to code lines of this test using line number (and to which Jobs they map to)
+     *      - `csv` method call line
+     *      - `collect` method call line
+     *
+     * (15) Map **Jobs** to code lines of this test using line number
+     *      - `csv` method call line
+     *      - `collect` method call line
+     *
+     * (16) Map **Stages** to code lines of this test using line number
+     *      - `csv` method call line
+     *      - `collect` method call line
+     *
+     * (17) Identify how many tasks are used and how many records are read to:
+     *      - Check file
+     *      - Infer schema
+     *      - Read non-multiline CSV
+     */
+
     implicit val spark: SparkSession = sparkSession
 
     val customersDF = spark.read
