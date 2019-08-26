@@ -3,7 +3,7 @@ import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 /**
- * Coalescing and Repartitioning
+ * Reading CSV
  *
  * (1) Run the test class.
  *     Eventually it will block in [[ReadingCsvSpec.afterAll]] on [[SparkPerf.keepSparkUIAlive()]] keeping Spark UI alive.
@@ -62,7 +62,7 @@ class ReadingCsvSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
      *     - Notice single part
      *     - Notice absence of LF in the middle of lines
      *
-     * (5) Map **Queries** to code lines of this test using line number (and to which Jobs they map to)
+     * (5) Map **Queries** to code lines of this test using line number (and map queries to jobs)
      *     - `collect` method call line
      *
      * (6) Map **Jobs** to code lines of this test using line number
