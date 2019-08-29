@@ -36,8 +36,8 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       * Observing Physical Plan when absence of partitioning
       *
       * (5) Observe plan for query in '''Spark UI'''
-      *     - Presence of `Scan` fully reading the table
-      *     - Presence of `Exchange`
+      *     - Presence of `Scan` node fully reading the table
+      *     - Presence of `Filter` node
       */
 
     implicit val spark: SparkSession = sparkSession
@@ -48,7 +48,7 @@ class PartitioningSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
       element_at(lit(Array("France", "Germany", "Portugal", "Spain", "Italy")), id)
 
     val countryCustomersDF = ECommerce.customersDS(1000000)
-      .withColumn("country", country(($"id" % 4 + 1).cast(IntegerType)))
+      .withColumn("country", country(($"id" % 5 + 1).cast(IntegerType)))
 
     countryCustomersDF.write
       .mode(SaveMode.Overwrite)

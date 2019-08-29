@@ -14,5 +14,5 @@ val root = (project in file(".")).settings(
   Test / fork := true,
   run / fork := true,
   Test / parallelExecution := false,
-  javaOptions ++= Seq("-Xms512M", "-Xmx2048M", "-XX:MaxPermSize=2048M", "-XX:+CMSClassUnloadingEnabled"),
+  javaOptions ++= Seq("-Xms512M", "-Xmx2048M", "-XX:MaxPermSize=2048M", "-XX:+CMSClassUnloadingEnabled")
 )
